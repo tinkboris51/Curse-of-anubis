@@ -2,140 +2,220 @@
 <html lang="sk">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#06101a">
-<title>Curse of Anubis V3</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050b13">
+<title>Curse of Anubis V4</title>
 
 <style>
 *{box-sizing:border-box}
 
-:root{
---gold:#f2c45b;
---gold2:#fff1a6;
---bronze:#8c5a1b;
---blue:#1689ff;
---blue2:#062b66;
---ink:#02050a;
---panel:#08111d
-}
-
 html,body{
 margin:0;
 min-height:100%;
+font-family:Inter,Arial,sans-serif;
 background:#02050a;
-color:#fff3cf;
-font-family:Arial,Helvetica,sans-serif
+color:#fff3d0
+}
+
+button{font:inherit}
+
+:root{
+--gold:#f4c65c;
+--gold2:#fff0a5;
+--deep:#06101d;
+--blue:#0f78d8;
+--line:#8b6121
 }
 
 body{
-min-height:100vh;
 overflow-x:hidden;
 background:
-radial-gradient(circle at 50% -10%,rgba(41,125,230,.52),transparent 32%),
-linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.7)),
-linear-gradient(180deg,#071a31 0,#06101c 38%,#03060b 70%,#010205 100%)
+radial-gradient(circle at 50% -8%,#12345f 0,#071526 28%,#03070d 62%,#010204 100%)
 }
 
-body:before{
-content:"";
+.sky{
 position:fixed;
-inset:auto 0 0;
-height:38vh;
+inset:0;
 pointer-events:none;
-opacity:.75;
-background:
-linear-gradient(155deg,transparent 45%,#060606 46% 70%,transparent 71%) 6% 100%/36% 65% no-repeat,
-linear-gradient(205deg,transparent 45%,#070707 46% 70%,transparent 71%) 88% 100%/40% 72% no-repeat,
-linear-gradient(160deg,transparent 45%,#0a0907 46% 70%,transparent 71%) 35% 100%/34% 55% no-repeat
+overflow:hidden;
+z-index:0
 }
 
-.game{
+.moon{
+position:absolute;
+width:92px;
+height:92px;
+border-radius:50%;
+right:8%;
+top:5%;
+background:
+radial-gradient(circle at 34% 32%,#fff,#dce7ff 38%,#98b1d9 72%,#49607e);
+box-shadow:0 0 34px #a9c6ff66;
+opacity:.8
+}
+
+.pyr{
+position:absolute;
+bottom:0;
+width:0;
+height:0;
+border-left:150px solid transparent;
+border-right:150px solid transparent;
+border-bottom:210px solid #080806;
+filter:drop-shadow(0 -10px 24px #13294a)
+}
+
+.p1{left:-70px}
+
+.p2{
+right:-80px;
+transform:scale(.85)
+}
+
+.column{
+position:absolute;
+bottom:0;
+width:70px;
+height:58%;
+background:
+linear-gradient(
+90deg,
+#120b05,
+#2a1b0d 30%,
+#5a3a17 50%,
+#2c1c0d 72%,
+#100905
+);
+border-left:2px solid #7d5820;
+border-right:2px solid #7d5820;
+opacity:.85
+}
+
+.c1{left:0}
+.c2{right:0}
+
+.torch{
+position:absolute;
+top:41%;
+width:18px;
+height:18px;
+border-radius:50%;
+background:#ff8f24;
+box-shadow:
+0 0 18px 7px #ff7c1f88,
+0 0 42px 16px #ff5c003d
+}
+
+.t1{left:7%}
+.t2{right:7%}
+
+.app{
 position:relative;
 z-index:1;
-max-width:1200px;
+width:min(1180px,100%);
 margin:auto;
-padding:8px 10px 18px
+padding:8px 8px 20px
 }
 
-.logo{
-text-align:center;
-position:relative;
-padding:3px 0 7px
-}
-
-.logo:before,
-.logo:after{
-content:"";
-position:absolute;
-top:49%;
-width:24%;
-height:16px;
-border-top:2px solid #b8842e;
-border-bottom:2px solid #604014;
-opacity:.75
-}
-
-.logo:before{
-left:0;
-transform:skewY(-5deg)
-}
-
-.logo:after{
-right:0;
-transform:skewY(5deg)
-}
-
-.logo small{
-display:block;
-font:700 clamp(12px,2vw,20px) Georgia,serif;
-color:#f4ce72;
-letter-spacing:.28em
-}
-
-.logo strong{
-display:block;
-font:900 clamp(42px,8vw,84px)/.9 Georgia,serif;
-letter-spacing:.04em;
-background:linear-gradient(#fff5b5 0,#f3c65b 36%,#a7651b 67%,#f9df86 100%);
--webkit-background-clip:text;
-background-clip:text;
-color:transparent;
-filter:drop-shadow(0 4px 0 #4f2a09)
-drop-shadow(0 0 18px rgba(255,173,31,.28))
+.top{
+display:grid;
+grid-template-columns:1fr auto 1fr;
+gap:8px;
+align-items:center
 }
 
 .jackpots{
 display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:6px;
-margin-bottom:7px
+grid-template-columns:repeat(2,1fr);
+gap:5px
+}
+
+.jp,
+.panel{
+background:linear-gradient(#101c2c,#050a12);
+border:1px solid var(--line);
+border-radius:10px;
+box-shadow:
+inset 0 0 0 1px #211708,
+0 8px 24px #0008
 }
 
 .jp{
-background:linear-gradient(#101d2d,#050b13);
-border:1px solid #8f6420;
-border-radius:9px;
 text-align:center;
-padding:6px;
-box-shadow:inset 0 0 12px #000
+padding:5px 8px
 }
 
 .jp span{
 display:block;
-font-size:10px;
-color:#d1a545;
-letter-spacing:.1em
+font-size:9px;
+letter-spacing:.14em;
+color:#d3a544
 }
 
 .jp b{
-font-size:clamp(14px,2.4vw,22px);
-color:#fff0a0
+font:800 15px Georgia;
+color:#fff1a6
 }
 
-.layout{
+.logo{
+text-align:center;
+min-width:260px
+}
+
+.logo small{
+display:block;
+color:#f2c964;
+letter-spacing:.28em;
+font:700 12px Georgia
+}
+
+.logo strong{
+display:block;
+font:900 clamp(40px,7vw,78px)/.88 Georgia;
+background:
+linear-gradient(
+#fff6bb,
+#e7b449 45%,
+#96580f 72%,
+#f4d474
+);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+filter:
+drop-shadow(0 4px 0 #4c2908)
+drop-shadow(0 0 16px #d98d2633)
+}
+
+.stats{
 display:grid;
-grid-template-columns:155px 1fr 155px;
-gap:8px
+grid-template-columns:1fr;
+gap:5px
+}
+
+.panel{
+text-align:center;
+padding:7px
+}
+
+.panel small{
+display:block;
+color:#d3a544;
+font-size:9px;
+letter-spacing:.12em
+}
+
+.panel b{
+font:800 19px Georgia;
+color:#fff0a5
+}
+
+.stage{
+display:grid;
+grid-template-columns:150px 1fr 150px;
+gap:8px;
+align-items:stretch;
+margin-top:7px
 }
 
 .side{
@@ -144,270 +224,292 @@ flex-direction:column;
 gap:8px
 }
 
-.sidecard{
-background:linear-gradient(180deg,rgba(10,20,34,.97),rgba(3,8,14,.98));
-border:2px solid #875f21;
-border-radius:14px;
+.card{
+flex:1;
+background:linear-gradient(180deg,#0d1826,#04090f);
+border:2px solid #835c20;
+border-radius:15px;
 padding:10px;
 text-align:center;
-box-shadow:inset 0 0 0 2px #1e160c,0 8px 20px #0008
+box-shadow:
+inset 0 0 0 2px #1d1508,
+0 10px 25px #0009
 }
 
-.sidecard h3{
+.card h3{
 margin:0 0 4px;
-font:700 18px Georgia,serif;
-color:#f1c761
+color:#f2c75b;
+font:800 17px Georgia
 }
 
-.sidecard .big{
-font-size:26px;
-font-weight:900
+.card p{
+margin:4px 0;
+color:#9fb2c7;
+font-size:11px;
+line-height:1.35
 }
 
 .buy{
 margin-top:auto;
-background:linear-gradient(#143f72,#07182b);
-border-color:#c08d30
+background:linear-gradient(#153e6f,#07182b)
+}
+
+.buy .price{
+font:900 25px Georgia;
+color:#fff0a0
 }
 
 .buy button{
 width:100%;
-margin-top:8px;
-background:linear-gradient(#f0c85f,#9a651d);
-color:#171008;
-border:0
+margin-top:7px;
+background:
+linear-gradient(#f6d56e,#9e651b);
+color:#1c1205;
+border:0;
+border-radius:10px;
+padding:10px;
+font-weight:900
 }
 
 .machine{
 position:relative;
-padding:12px;
+border-radius:24px;
+padding:13px;
 background:
 linear-gradient(
 90deg,
-#4d2f0c,
-#d3a23b 7%,
-#664112 12%,
-#120c05 15%,
-#120c05 85%,
-#664112 88%,
-#d3a23b 93%,
-#4d2f0c
+#4a2b08,
+#d5a13a 7%,
+#5b390f 11%,
+#130d06 15%,
+#130d06 85%,
+#5b390f 89%,
+#d5a13a 93%,
+#4a2b08
 );
-border-radius:22px;
 box-shadow:
-0 10px 35px #000,
-0 0 25px rgba(240,183,55,.12)
+0 16px 40px #000,
+0 0 28px #e8aa3320
+}
+
+.machine:before{
+content:"𓂀";
+position:absolute;
+left:50%;
+top:-17px;
+transform:translateX(-50%);
+font-size:34px;
+color:#f4d06a;
+text-shadow:0 0 12px #54aaff80
 }
 
 .reels{
 display:grid;
 grid-template-columns:repeat(5,1fr);
-gap:5px;
-background:#010409;
+gap:4px;
 padding:5px;
-border:2px solid #40290e;
-border-radius:12px;
+background:#010409;
+border:2px solid #4e3310;
+border-radius:13px;
 overflow:hidden
 }
 
 .reel{
-height:306px;
+height:300px;
 position:relative;
 overflow:hidden;
-background:linear-gradient(#07121f,#02060a)
+background:#030812
 }
 
 .strip{
 position:absolute;
-top:0;
 left:0;
-right:0
+right:0;
+top:0
 }
 
 .sym{
-height:102px;
+height:100px;
 display:flex;
 align-items:center;
 justify-content:center;
 position:relative;
-overflow:hidden;
+border-bottom:1px solid #17273a;
+border-right:1px solid #111d2c;
 background:
-radial-gradient(circle at 50% 40%,rgba(24,50,82,.95),rgba(4,8,13,.98) 72%),
-linear-gradient(#0b1420,#03070c);
-border-bottom:1px solid #21334b;
-border-right:1px solid #111c2a
+radial-gradient(
+circle at 50% 42%,
+#142b49 0,
+#08111d 48%,
+#03070d 76%
+)
 }
 
 .sym:after{
 content:"";
 position:absolute;
 inset:5px;
-border:1px solid rgba(241,196,91,.09);
+border:1px solid #d7a9471f;
 border-radius:10px
 }
 
 .sym svg{
-width:89%;
-height:89%;
+width:88%;
+height:88%;
 filter:drop-shadow(0 5px 8px #000)
 }
 
 .sym.win{
-outline:3px solid #ffe886;
+outline:3px solid #ffe783;
 outline-offset:-4px;
-animation:win .45s infinite alternate;
-background:radial-gradient(circle,#4b350a,#07111d 72%)
+animation:flash .42s infinite alternate;
+background:
+radial-gradient(circle,#53390a,#07101a 70%)
 }
 
-@keyframes win{
+@keyframes flash{
 to{
-transform:scale(1.04);
-filter:brightness(1.45)
+filter:brightness(1.5);
+transform:scale(1.04)
 }
 }
 
-.mobilepanels{
-display:none
+.mobileMeta{
+display:none;
+grid-template-columns:repeat(3,1fr);
+gap:5px;
+margin:6px 0
 }
 
-.hud{
+.mini{
+padding:6px;
+background:#08121f;
+border:1px solid #704f1d;
+border-radius:9px;
+text-align:center
+}
+
+.mini small{
+display:block;
+font-size:8px;
+color:#c79a39
+}
+
+.mini b{
+font-size:15px;
+color:#ffe18b
+}
+
+.controls{
 display:grid;
-grid-template-columns:1fr 1fr 94px 1fr 1fr;
-gap:7px;
+grid-template-columns:1fr 1fr 92px 1fr 1fr;
+gap:6px;
 align-items:center;
-margin-top:9px
+margin-top:8px
 }
 
-.readout,
-button{
-border:2px solid #876020;
+.read,
+.ctrl{
+min-height:56px;
+border:2px solid #7c571f;
 border-radius:12px;
-background:linear-gradient(#11223a,#06101c);
-color:#fff0be;
-box-shadow:inset 0 0 0 1px #1e3755;
-min-height:58px;
-font-weight:800
+background:
+linear-gradient(#10223a,#06101b);
+color:#fff0b7;
+box-shadow:
+inset 0 0 0 1px #1f3857;
+text-align:center
 }
 
-.readout{
+.read{
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center
 }
 
-.readout small{
-font-size:10px;
-color:#d4a94a;
-letter-spacing:.08em
+.read small{
+font-size:9px;
+color:#d2a33f;
+letter-spacing:.1em
 }
 
-.readout b{
-font-size:22px
-}
-
-button{
-padding:8px;
-touch-action:manipulation
-}
-
-button:active{
-transform:translateY(1px)
+.read b{
+font-size:21px
 }
 
 .spin{
-width:94px;
-height:94px;
+width:92px;
+height:92px;
 border-radius:50%;
-font-size:17px;
+border:3px solid #f0c258;
 background:
 radial-gradient(
-circle at 38% 32%,
-#5bc2ff,
-#0f78df 38%,
-#074693 59%,
-#032456 64%,
-#f3c75b 66%,
-#795017 75%,
-#0b0d10 79%
+circle at 35% 30%,
+#64c8ff,
+#107dde 38%,
+#064b9a 60%,
+#03255a 65%,
+#f0c45c 67%,
+#715019 76%,
+#07101b 79%
 );
-border:3px solid #efc45b;
 box-shadow:
-0 0 24px rgba(20,137,255,.5),
-inset 0 0 0 4px #674516
+0 0 24px #178dff77,
+inset 0 0 0 4px #6f4a18;
+color:#fff1b5;
+font-weight:900
 }
 
-.spin:disabled{
-filter:grayscale(.55);
-opacity:.7
-}
-
-.status{
-margin-top:8px;
-min-height:46px;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:8px;
-border:1px solid #31557f;
-border-radius:11px;
-background:rgba(5,14,24,.92);
-font-weight:800;
-color:#d9eaff
+.ctrl{
+font-size:11px;
+font-weight:900
 }
 
 .quick{
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:6px;
-margin-top:7px
+margin-top:6px
 }
 
 .quick button{
-min-height:42px;
-font-size:11px
+min-height:40px;
+border:1px solid #6a4a19;
+border-radius:10px;
+background:#081422;
+color:#e7c15e;
+font-weight:800
 }
 
-.legend{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:5px;
-margin-top:7px
-}
-
-.legend div{
-background:#06101b;
-border:1px solid #263f61;
-border-radius:8px;
-padding:6px;
+.status{
+margin-top:7px;
+padding:9px;
+border-radius:10px;
+background:#06111d;
+border:1px solid #294d72;
 text-align:center;
-color:#9fb0c5;
-font-size:9px
+color:#dcecff;
+font-weight:800;
+min-height:42px
 }
 
-.legend b{
-display:block;
-color:#edc45f;
-font-size:11px
-}
-
-.footer{
+.demo{
 text-align:center;
-color:#6e7c8d;
-font-size:10px;
-margin-top:7px
+color:#65788d;
+font-size:9px;
+margin-top:6px
 }
 
 .overlay{
 position:fixed;
 inset:0;
-background:#000d;
+z-index:20;
 display:none;
 align-items:center;
 justify-content:center;
-z-index:20;
-padding:15px
+background:#000d;
+padding:14px
 }
 
 .overlay.show{
@@ -416,22 +518,33 @@ display:flex
 
 .modal{
 width:min(500px,94vw);
-background:linear-gradient(#0d1d31,#050a11);
-border:2px solid #b8842f;
+background:
+linear-gradient(#0d1d31,#050a11);
+border:2px solid #b7812e;
 border-radius:18px;
 padding:18px;
 text-align:center;
-box-shadow:0 0 50px #000
+box-shadow:0 0 55px #000
 }
 
 .modal h2{
-font:800 32px Georgia,serif;
-color:#f6d168;
-margin:0 0 8px
+margin:0 0 8px;
+color:#f5ce62;
+font:900 31px Georgia
 }
 
 .modal p{
-color:#c8d7e8
+color:#c8d9ea
+}
+
+.modal button{
+padding:12px 18px;
+border:1px solid #b9822e;
+border-radius:10px;
+background:
+linear-gradient(#174f8d,#092344);
+color:#ffe7a0;
+font-weight:900
 }
 
 .chests{
@@ -441,13 +554,29 @@ gap:8px
 }
 
 .chests button{
-font-size:32px;
+font-size:34px;
 min-height:88px
 }
 
 @media(max-width:900px){
 
-.layout{
+.top{
+grid-template-columns:1fr
+}
+
+.logo{
+order:-1
+}
+
+.jackpots{
+grid-template-columns:repeat(4,1fr)
+}
+
+.stats{
+display:none
+}
+
+.stage{
 grid-template-columns:1fr
 }
 
@@ -455,31 +584,24 @@ grid-template-columns:1fr
 display:none
 }
 
-.mobilepanels{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:6px;
-margin:7px 0
-}
-
-.mobilepanels .sidecard{
-padding:7px
-}
-
-.mobilepanels .sidecard h3{
-font-size:13px
-}
-
-.mobilepanels .big{
-font-size:17px
+.mobileMeta{
+display:grid
 }
 
 }
 
 @media(max-width:620px){
 
-.game{
+.app{
 padding:5px
+}
+
+.logo strong{
+font-size:44px
+}
+
+.logo small{
+font-size:10px
 }
 
 .jackpots{
@@ -490,12 +612,8 @@ grid-template-columns:repeat(2,1fr)
 padding:4px
 }
 
-.logo strong{
-font-size:44px
-}
-
-.logo small{
-font-size:12px
+.jp b{
+font-size:13px
 }
 
 .machine{
@@ -511,7 +629,7 @@ height:216px
 height:72px
 }
 
-.hud{
+.controls{
 grid-template-columns:1fr 1fr 80px;
 grid-template-areas:
 "bal bet spin"
@@ -520,7 +638,7 @@ grid-template-areas:
 
 .bal{grid-area:bal}
 .bet{grid-area:bet}
-.winr{grid-area:win}
+.win{grid-area:win}
 .auto{grid-area:auto}
 
 .spin{
@@ -529,8 +647,13 @@ width:80px;
 height:80px
 }
 
-.quick{
-grid-template-columns:repeat(4,1fr)
+.read,
+.ctrl{
+min-height:48px
+}
+
+.read b{
+font-size:18px
 }
 
 .quick button{
@@ -538,8 +661,12 @@ font-size:9px;
 padding:5px
 }
 
-.legend{
-grid-template-columns:repeat(2,1fr)
+.status{
+font-size:12px
+}
+
+.mobileMeta{
+grid-template-columns:repeat(3,1fr)
 }
 
 }
@@ -548,12 +675,24 @@ grid-template-columns:repeat(2,1fr)
 
 <body>
 
-<div class="game">
+<div class="sky">
 
-<div class="logo">
-<small>CURSE OF</small>
-<strong>ANUBIS</strong>
+<div class="moon"></div>
+
+<div class="pyr p1"></div>
+<div class="pyr p2"></div>
+
+<div class="column c1"></div>
+<div class="column c2"></div>
+
+<div class="torch t1"></div>
+<div class="torch t2"></div>
+
 </div>
+
+<div class="app">
+
+<div class="top">
 
 <div class="jackpots">
 
@@ -579,38 +718,120 @@ grid-template-columns:repeat(2,1fr)
 
 </div>
 
-<div class="mobilepanels">
+<div class="logo">
 
-<div class="sidecard">
-<h3>FREE SPINS</h3>
-<div class="big" id="freeM">0</div>
-</div>
+<small>CURSE OF</small>
 
-<div class="sidecard">
-<h3>MULTIPLIER</h3>
-<div class="big" id="multiM">×1</div>
-</div>
+<strong>
+ANUBIS
+</strong>
 
 </div>
 
-<div class="layout">
+<div class="stats">
+
+<div class="panel">
+
+<small>
+FREE SPINS
+</small>
+
+<b id="freeDesk">
+0
+</b>
+
+</div>
+
+<div class="panel">
+
+<small>
+MULTIPLIER
+</small>
+
+<b id="multiDesk">
+×1
+</b>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="mobileMeta">
+
+<div class="mini">
+
+<small>
+FREE SPINS
+</small>
+
+<b id="freeMob">
+0
+</b>
+
+</div>
+
+<div class="mini">
+
+<small>
+MULTIPLIER
+</small>
+
+<b id="multiMob">
+×1
+</b>
+
+</div>
+
+<div class="mini">
+
+<small>
+BUY BONUS
+</small>
+
+<b id="buyMob">
+1000
+</b>
+
+</div>
+
+</div>
+
+<div class="stage">
 
 <aside class="side">
 
-<div class="sidecard">
-<h3>FREE SPINS</h3>
-<div class="big" id="free">0</div>
+<div class="card buy">
+
+<h3>
+BUY BONUS
+</h3>
+
+<div class="price" id="buyPrice">
+1000
 </div>
 
-<div class="sidecard">
-<h3>MULTIPLIER</h3>
-<div class="big" id="multi">×1</div>
+<p>
+Demo aktivácia 10 Free Spins.
+</p>
+
+<button id="buyBonus">
+ACTIVATE
+</button>
+
 </div>
 
-<div class="sidecard buy">
-<h3>BUY BONUS</h3>
-<div class="big" id="buyPrice">1000</div>
-<button id="buyBonus">ACTIVATE</button>
+<div class="card">
+
+<h3>
+SCARAB
+</h3>
+
+<p>
+3+ Scatter symboly spustia Free Spins.
+</p>
+
 </div>
 
 </aside>
@@ -618,31 +839,55 @@ grid-template-columns:repeat(2,1fr)
 <main>
 
 <div class="machine">
-<div class="reels" id="reels"></div>
+
+<div class="reels" id="reels">
 </div>
 
-<div class="hud">
-
-<div class="readout bal">
-<small>BALANCE</small>
-<b id="credit">1000</b>
 </div>
 
-<div class="readout bet">
-<small>BET</small>
-<b id="bet">10</b>
+<div class="controls">
+
+<div class="read bal">
+
+<small>
+BALANCE
+</small>
+
+<b id="credit">
+1000
+</b>
+
+</div>
+
+<div class="read bet">
+
+<small>
+BET
+</small>
+
+<b id="bet">
+10
+</b>
+
 </div>
 
 <button class="spin" id="spin">
 SPIN
 </button>
 
-<div class="readout winr">
-<small>WIN</small>
-<b id="win">0</b>
+<div class="read win">
+
+<small>
+WIN
+</small>
+
+<b id="win">
+0
+</b>
+
 </div>
 
-<button class="auto" id="auto">
+<button class="ctrl auto" id="auto">
 AUTO ×10
 </button>
 
@@ -672,72 +917,61 @@ RESET
 𓂀 THE TEMPLE AWAITS — stlač SPIN
 </div>
 
-<div class="legend">
-
-<div>
-<b>ANUBIS WILD</b>
-nahrádza symbol
-</div>
-
-<div>
-<b>SCARAB SCATTER</b>
-3+ Free Spins
-</div>
-
-<div>
-<b>BONUS TEMPLE</b>
-3+ Bonus Pick
-</div>
-
-<div>
-<b>TUMBLE</b>
-výherné symboly miznú
-</div>
-
-<div>
-<b>MULTIPLIER</b>
-rastie až do ×10
-</div>
-
-</div>
-
 </main>
 
 <aside class="side">
 
-<div class="sidecard">
-<h3>ANUBIS POWER</h3>
+<div class="card">
+
+<h3>
+ANUBIS WILD
+</h3>
+
 <p>
-Wild pomáha vytvárať veľké skupiny symbolov.
+Wild sa počíta ku každej bežnej skupine symbolov.
 </p>
+
 </div>
 
-<div class="sidecard">
-<h3>SCARAB RITUAL</h3>
+<div class="card">
+
+<h3>
+TUMBLE ×10
+</h3>
+
 <p>
-3 alebo viac scarabov odomkne Free Spins.
+Výherné symboly zmiznú a násobič rastie.
 </p>
+
 </div>
 
-<div class="sidecard">
-<h3>TEMPLE BONUS</h3>
+<div class="card">
+
+<h3>
+TEMPLE BONUS
+</h3>
+
 <p>
-3 bonus symboly otvoria výber truhlice.
+3+ BONUS symboly odomknú výber truhlice.
 </p>
+
 </div>
 
 </aside>
 
 </div>
 
-<div class="footer">
+<div class="demo">
 DEMO • fiktívne kredity • bez reálnych peňazí
 </div>
 
 </div>
 
 <div class="overlay" id="overlay">
-<div class="modal" id="modal"></div>
+
+<div class="modal" id="modal">
+</div>
+
 </div>
 
 <script>
@@ -771,24 +1005,24 @@ let autoLeft=0;
 let turbo=false;
 let board=[];
 
-const $=id=>
-document.getElementById(id);
+const $=
+id=>document.getElementById(id);
 
-const sleep=ms=>
-new Promise(
+const sleep=
+ms=>new Promise(
 r=>setTimeout(r,ms)
 );
 
 function pick(){
 
-let total=
+let t=
 TYPES.reduce(
 (a,x)=>a+x[1],
 0
 );
 
 let r=
-Math.random()*total;
+Math.random()*t;
 
 for(const x of TYPES){
 
@@ -812,67 +1046,22 @@ pick
 
 }
 
-function svg(type){
+function icon(t){
 
-const defs=`
-<defs>
+const G="#efbd4d";
+const L="#ffe58b";
+const B="#2fa9ff";
+const D="#08121e";
 
-<linearGradient
-id="g"
-x1="0"
-x2="1"
-y1="0"
-y2="1">
-
-<stop stop-color="#fff2a9"/>
-
-<stop
-offset=".46"
-stop-color="#e0a633"/>
-
-<stop
-offset="1"
-stop-color="#71410e"/>
-
-</linearGradient>
-
-<linearGradient
-id="b"
-x1="0"
-x2="1">
-
-<stop stop-color="#67c5ff"/>
-
-<stop
-offset="1"
-stop-color="#07377c"/>
-
-</linearGradient>
-
-<radialGradient id="r">
-
-<stop stop-color="#ffcf5d"/>
-
-<stop
-offset="1"
-stop-color="#8e4b12"/>
-
-</radialGradient>
-
-</defs>
-`;
-
-if(type==="eye")
+if(t==="eye")
 
 return `
 <svg viewBox="0 0 100 100">
 
-${defs}
-
 <path
 d="M8 52Q50 16 92 52Q50 84 8 52Z"
 fill="none"
-stroke="url(#g)"
+stroke="${G}"
 stroke-width="7"
 />
 
@@ -880,8 +1069,8 @@ stroke-width="7"
 cx="50"
 cy="52"
 r="16"
-fill="url(#b)"
-stroke="#f5cf66"
+fill="#0b69ac"
+stroke="${L}"
 stroke-width="4"
 />
 
@@ -894,31 +1083,29 @@ fill="#03101c"
 
 <path
 d="M50 69v15M45 81l-8 8"
-stroke="#d8a43a"
+stroke="${G}"
 stroke-width="5"
 />
 
 </svg>
 `;
 
-if(type==="cobra")
+if(t==="cobra")
 
 return `
 <svg viewBox="0 0 100 100">
 
-${defs}
-
 <path
 d="M56 89c24-18 19-40 2-46-7-3-7-14 1-20 12-9 24-1 24 9-8-6-16-1-18 6 16 5 23 22 16 37-8 17-30 22-51 12"
 fill="none"
-stroke="url(#g)"
+stroke="${G}"
 stroke-width="8"
 />
 
 <path
 d="M62 22q17-11 23 6-10 2-18 13z"
-fill="#236d42"
-stroke="#e7b84d"
+fill="#24734a"
+stroke="${L}"
 stroke-width="3"
 />
 
@@ -926,18 +1113,16 @@ stroke-width="3"
 cx="75"
 cy="28"
 r="2.5"
-fill="#ff4d27"
+fill="#ff4c28"
 />
 
 </svg>
 `;
 
-if(type==="ankh")
+if(t==="ankh")
 
 return `
 <svg viewBox="0 0 100 100">
-
-${defs}
 
 <ellipse
 cx="50"
@@ -945,13 +1130,13 @@ cy="28"
 rx="17"
 ry="21"
 fill="none"
-stroke="url(#g)"
+stroke="${G}"
 stroke-width="8"
 />
 
 <path
 d="M50 49v42M23 63h54"
-stroke="url(#g)"
+stroke="${L}"
 stroke-width="9"
 stroke-linecap="round"
 />
@@ -959,59 +1144,55 @@ stroke-linecap="round"
 </svg>
 `;
 
-if(type==="pyramid")
+if(t==="pyramid")
 
 return `
 <svg viewBox="0 0 100 100">
-
-${defs}
 
 <circle
 cx="78"
 cy="20"
 r="10"
-fill="#ff8d33"
+fill="#ff983a"
 />
 
 <path
 d="M10 84L50 16l40 68z"
-fill="url(#g)"
-stroke="#ffe28e"
+fill="#b8781f"
+stroke="${L}"
 stroke-width="3"
 />
 
 <path
 d="M50 16v68"
-stroke="#6b3c0e"
+stroke="#59340e"
 stroke-width="3"
 />
 
 <path
 d="M10 85h80"
-stroke="#d8a33e"
+stroke="${G}"
 stroke-width="5"
 />
 
 </svg>
 `;
 
-if(type==="pharaoh")
+if(t==="pharaoh")
 
 return `
 <svg viewBox="0 0 100 100">
 
-${defs}
-
 <path
 d="M24 22Q50 3 76 22l6 24-12 37H30L18 46z"
-fill="url(#g)"
-stroke="#ffe38f"
+fill="#d39a31"
+stroke="${L}"
 stroke-width="3"
 />
 
 <path
 d="M28 23h44l-7 13H35z"
-fill="url(#b)"
+fill="#165e9d"
 />
 
 <ellipse
@@ -1019,7 +1200,7 @@ cx="50"
 cy="54"
 rx="18"
 ry="24"
-fill="#d59a46"
+fill="#d89b50"
 />
 
 <path
@@ -1033,43 +1214,41 @@ fill="none"
 `;
 
 if(
-type==="anubis" ||
-type==="wild"
-){
+t==="anubis" ||
+t==="wild"
+)
 
 return `
 <svg viewBox="0 0 100 100">
 
-${defs}
-
 <path
 d="M28 27L38 5l8 28M72 27L62 5l-8 28"
-fill="#07121f"
-stroke="#e7b84d"
+fill="${D}"
+stroke="${G}"
 stroke-width="3"
 />
 
 <path
 d="M24 34Q50 18 76 34l-8 43-18 13-18-13z"
-fill="#101b2a"
-stroke="url(#g)"
+fill="#121d2b"
+stroke="${L}"
 stroke-width="4"
 />
 
 <path
 d="M36 49l11 2-7 5M64 49l-11 2 7 5"
-stroke="#4cb9ff"
+stroke="${B}"
 stroke-width="5"
 />
 
 <path
 d="M44 69h12"
-stroke="#ddb04a"
+stroke="${G}"
 stroke-width="4"
 />
 
 ${
-type==="wild"
+t==="wild"
 ?
 `
 <rect
@@ -1100,22 +1279,18 @@ WILD
 </svg>
 `;
 
-}
-
-if(type==="scatter")
+if(t==="scatter")
 
 return `
 <svg viewBox="0 0 100 100">
-
-${defs}
 
 <ellipse
 cx="50"
 cy="58"
 rx="20"
 ry="27"
-fill="url(#b)"
-stroke="#f2c657"
+fill="#0b5d92"
+stroke="${G}"
 stroke-width="5"
 />
 
@@ -1123,14 +1298,14 @@ stroke-width="5"
 cx="50"
 cy="24"
 r="11"
-fill="#ff5b2d"
-stroke="#ffd76e"
+fill="#e43b25"
+stroke="${L}"
 stroke-width="4"
 />
 
 <path
 d="M30 49L13 35M70 49L87 35M29 64L11 71M71 64L89 71"
-stroke="#eac04d"
+stroke="${G}"
 stroke-width="6"
 />
 
@@ -1150,18 +1325,16 @@ SCATTER
 return `
 <svg viewBox="0 0 100 100">
 
-${defs}
-
 <path
 d="M18 79V43l13-19h38l13 19v36z"
-fill="#140e08"
-stroke="url(#g)"
+fill="#160f08"
+stroke="${L}"
 stroke-width="5"
 />
 
 <path
 d="M28 48h44M35 48v31M50 48v31M65 48v31"
-stroke="#b67a28"
+stroke="#b97c2a"
 stroke-width="4"
 />
 
@@ -1169,7 +1342,7 @@ stroke-width="4"
 cx="50"
 cy="38"
 r="10"
-fill="url(#r)"
+fill="#cc7a20"
 />
 
 <text
@@ -1187,7 +1360,13 @@ BONUS
 
 }
 
-function updateUI(){
+function ui(){
+
+credit=
+Math.max(
+0,
+credit
+);
 
 $("credit").textContent=
 Math.floor(credit);
@@ -1195,19 +1374,22 @@ Math.floor(credit);
 $("bet").textContent=
 BETS[betIndex];
 
-$("free").textContent=
+$("freeDesk").textContent=
 freeSpins;
 
-$("multi").textContent=
+$("freeMob").textContent=
+freeSpins;
+
+$("multiDesk").textContent=
 "×"+multiplier;
 
-$("freeM").textContent=
-freeSpins;
-
-$("multiM").textContent=
+$("multiMob").textContent=
 "×"+multiplier;
 
 $("buyPrice").textContent=
+BETS[betIndex]*100;
+
+$("buyMob").textContent=
 BETS[betIndex]*100;
 
 $("turbo").textContent=
@@ -1219,7 +1401,7 @@ turbo
 
 }
 
-function draw(highlight=[]){
+function draw(hi=[]){
 
 $("reels").innerHTML="";
 
@@ -1228,16 +1410,19 @@ for(let c=0;c<5;c++){
 const reel=
 document.createElement("div");
 
-reel.className="reel";
+reel.className=
+"reel";
 
 const strip=
 document.createElement("div");
 
-strip.className="strip";
+strip.className=
+"strip";
 
 for(let r=0;r<3;r++){
 
-const idx=r*5+c;
+const i=
+r*5+c;
 
 const s=
 document.createElement("div");
@@ -1245,7 +1430,7 @@ document.createElement("div");
 s.className=
 "sym"+
 (
-highlight.includes(idx)
+hi.includes(i)
 ?
 " win"
 :
@@ -1253,7 +1438,7 @@ highlight.includes(idx)
 );
 
 s.innerHTML=
-svg(board[idx]);
+icon(board[i]);
 
 strip.appendChild(s);
 
@@ -1272,13 +1457,13 @@ async function animate(){
 $("reels").innerHTML="";
 
 const h=
-window.innerWidth<=620
+innerWidth<=620
 ?
 72
 :
-102;
+100;
 
-const fillers=14;
+const fill=14;
 
 const strips=[];
 
@@ -1287,22 +1472,25 @@ for(let c=0;c<5;c++){
 const reel=
 document.createElement("div");
 
-reel.className="reel";
+reel.className=
+"reel";
 
 const strip=
 document.createElement("div");
 
-strip.className="strip";
+strip.className=
+"strip";
 
-for(let i=0;i<fillers;i++){
+for(let i=0;i<fill;i++){
 
 const s=
 document.createElement("div");
 
-s.className="sym";
+s.className=
+"sym";
 
 s.innerHTML=
-svg(pick());
+icon(pick());
 
 strip.appendChild(s);
 
@@ -1313,10 +1501,13 @@ for(let r=0;r<3;r++){
 const s=
 document.createElement("div");
 
-s.className="sym";
+s.className=
+"sym";
 
 s.innerHTML=
-svg(board[r*5+c]);
+icon(
+board[r*5+c]
+);
 
 strip.appendChild(s);
 
@@ -1330,24 +1521,24 @@ strips.push(strip);
 
 }
 
-await sleep(30);
+await sleep(25);
 
 const base=
 turbo
 ?
-260
+230
 :
-720;
+650;
 
 const step=
 turbo
 ?
-45
+40
 :
-110;
+95;
 
 const target=
--(fillers*h);
+-(fill*h);
 
 strips.forEach(
 (s,i)=>{
@@ -1362,20 +1553,22 @@ s.style.transform=
 );
 
 await sleep(
-base+step*4+100
+base+
+step*4+
+90
 );
 
 }
 
-function count(type){
+function count(t){
 
 return board.filter(
-x=>x===type
+x=>x===t
 ).length;
 
 }
 
-function evaluate(){
+function evalWins(){
 
 const groups={};
 
@@ -1389,7 +1582,8 @@ if(s==="wild"){
 wilds.push(i);
 
 }else if(
-!["scatter","bonus"].includes(s)
+!["scatter","bonus"]
+.includes(s)
 ){
 
 if(!groups[s])
@@ -1402,7 +1596,7 @@ groups[s].push(i);
 }
 );
 
-const pays={
+const pay={
 eye:2,
 cobra:2,
 ankh:3,
@@ -1424,7 +1618,7 @@ if(ids.length>=8){
 
 wins.push({
 ids,
-pay:pays[k]||2
+pay:pay[k]||2
 });
 
 }
@@ -1443,7 +1637,7 @@ let round=0;
 while(round<5){
 
 const wins=
-evaluate();
+evalWins();
 
 if(!wins.length)
 break;
@@ -1458,7 +1652,9 @@ wins.forEach(
 w=>{
 
 amount+=
-bet*w.pay*multiplier;
+bet*
+w.pay*
+multiplier;
 
 w.ids.forEach(
 i=>{
@@ -1485,9 +1681,9 @@ $("status").textContent=
 await sleep(
 turbo
 ?
-170
+160
 :
-470
+430
 );
 
 ids.forEach(
@@ -1496,7 +1692,8 @@ i=>board[i]=null
 
 board=
 board.map(
-x=>x===null
+x=>
+x===null
 ?
 pick()
 :
@@ -1509,16 +1706,16 @@ Math.min(
 multiplier+1
 );
 
-updateUI();
+ui();
 
 draw();
 
 await sleep(
 turbo
 ?
-100
+90
 :
-240
+220
 );
 
 }
@@ -1552,7 +1749,9 @@ return new Promise(
 resolve=>{
 
 show(`
-<h2>TEMPLE BONUS</h2>
+<h2>
+TEMPLE BONUS
+</h2>
 
 <p>
 Vyber jednu truhlicu.
@@ -1560,472 +1759,27 @@ Vyber jednu truhlicu.
 
 <div class="chests">
 
-<button>🏺</button>
-<button>🏺</button>
-<button>🏺</button>
+<button>
+🏺
+</button>
+
+<button>
+🏺
+</button>
+
+<button>
+🏺
+</button>
 
 </div>
 `);
 
 document
-.querySelectorAll(".chests button")
+.querySelectorAll(
+".chests button"
+)
 .forEach(
-btn=>btn.onclick=()=>{
+btn=>
+btn.onclick=()=>{
 
-const values=[
-10,
-15,
-20,
-30,
-50
-];
-
-const v=
-values[
-Math.floor(
-Math.random()*values.length
-)
-]
-*
-bet;
-
-btn.textContent="💰";
-
-setTimeout(
-()=>{
-
-hide();
-
-resolve(v);
-
-},
-450
-);
-
-}
-);
-
-}
-);
-
-}
-
-async function countWin(value){
-
-if(value<=0)
-return;
-
-const start=credit;
-
-const duration=
-turbo
-?
-180
-:
-650;
-
-const t0=
-Date.now();
-
-return new Promise(
-resolve=>{
-
-function frame(){
-
-const p=
-Math.min(
-1,
-(Date.now()-t0)/duration
-);
-
-const shown=
-Math.floor(
-value*
-(
-1-Math.pow(1-p,3)
-)
-);
-
-$("win").textContent=
-shown;
-
-$("credit").textContent=
-Math.floor(
-start+shown
-);
-
-if(p<1){
-
-requestAnimationFrame(frame);
-
-}else{
-
-credit+=value;
-
-updateUI();
-
-resolve();
-
-}
-
-}
-
-frame();
-
-}
-);
-
-}
-
-async function spin(){
-
-if(busy)
-return;
-
-const bet=
-BETS[betIndex];
-
-const isFree=
-freeSpins>0;
-
-if(
-!isFree &&
-credit<bet
-){
-
-$("status").textContent=
-"Nemáš dostatok kreditov.";
-
-return;
-
-}
-
-busy=true;
-
-$("spin").disabled=true;
-
-$("win").textContent="0";
-
-if(isFree){
-
-freeSpins--;
-
-}else{
-
-credit-=bet;
-
-multiplier=1;
-
-}
-
-updateUI();
-
-$("status").textContent=
-isFree
-?
-"🎁 FREE SPIN…"
-:
-"𓂀 ANUBIS AWAKENS…";
-
-board=
-makeBoard();
-
-await animate();
-
-draw();
-
-const scat=
-count("scatter");
-
-const bonus=
-count("bonus");
-
-let total=
-await tumble(bet);
-
-if(scat>=3){
-
-const award=
-scat>=5
-?
-15
-:
-(
-scat===4
-?
-10
-:
-8
-);
-
-freeSpins+=award;
-
-multiplier=
-Math.max(
-2,
-multiplier
-);
-
-updateUI();
-
-show(`
-<h2>SCARAB RITUAL</h2>
-
-<p style="font-size:28px">
-${award} FREE SPINS
-</p>
-
-<button id="continueFS">
-POKRAČOVAŤ
-</button>
-`);
-
-setTimeout(
-()=>{
-
-$("continueFS").onclick=
-hide;
-
-},
-0
-);
-
-}
-
-if(bonus>=3){
-
-const bonusWin=
-await bonusPick(bet);
-
-total+=bonusWin;
-
-$("status").textContent=
-`🏺 BONUS +${bonusWin}`;
-
-}
-
-if(total>0){
-
-await countWin(total);
-
-if(total>=bet*20){
-
-show(`
-<h2>MEGA WIN</h2>
-
-<p style="font-size:34px">
-${total}
-</p>
-
-<button id="megaContinue">
-POKRAČOVAŤ
-</button>
-`);
-
-setTimeout(
-()=>{
-
-$("megaContinue").onclick=
-hide;
-
-},
-0
-);
-
-}else{
-
-$("status").textContent=
-`WIN +${total}`;
-
-}
-
-}else if(
-scat<3 &&
-bonus<3
-){
-
-$("status").textContent=
-"Chrám ostáva ticho… bez výhry.";
-
-}
-
-updateUI();
-
-busy=false;
-
-$("spin").disabled=false;
-
-if(freeSpins>0){
-
-setTimeout(
-spin,
-turbo
-?
-190
-:
-560
-);
-
-}else if(autoLeft>0){
-
-autoLeft--;
-
-if(autoLeft>0){
-
-setTimeout(
-spin,
-turbo
-?
-170
-:
-390
-);
-
-}
-
-}
-
-}
-
-$("spin").onclick=
-spin;
-
-$("auto").onclick=()=>{
-
-if(!busy){
-
-autoLeft=10;
-
-spin();
-
-}
-
-};
-
-$("minus").onclick=()=>{
-
-if(
-!busy &&
-betIndex>0
-){
-
-betIndex--;
-
-updateUI();
-
-}
-
-};
-
-$("plus").onclick=()=>{
-
-if(
-!busy &&
-betIndex<BETS.length-1
-){
-
-betIndex++;
-
-updateUI();
-
-}
-
-};
-
-$("turbo").onclick=()=>{
-
-turbo=!turbo;
-
-updateUI();
-
-};
-
-$("reset").onclick=()=>{
-
-if(!busy){
-
-credit=1000;
-
-freeSpins=0;
-
-multiplier=1;
-
-autoLeft=0;
-
-$("win").textContent=0;
-
-$("status").textContent=
-"𓂀 THE TEMPLE AWAITS — stlač SPIN";
-
-updateUI();
-
-}
-
-};
-
-$("buyBonus").onclick=()=>{
-
-if(busy)
-return;
-
-const price=
-BETS[betIndex]*100;
-
-if(credit<price){
-
-$("status").textContent=
-"Nemáš dostatok demo kreditov na bonus.";
-
-return;
-
-}
-
-credit-=price;
-
-freeSpins+=10;
-
-multiplier=2;
-
-updateUI();
-
-show(`
-<h2>BONUS ACTIVATED</h2>
-
-<p>
-10 FREE SPINS • MULTIPLIER ×2
-</p>
-
-<button id="startBonus">
-ZAČAŤ
-</button>
-`);
-
-setTimeout(
-()=>{
-
-$("startBonus").onclick=
-()=>{
-
-hide();
-
-spin();
-
-};
-
-},
-0
-);
-
-};
-
-board=
-makeBoard();
-
-draw();
-
-updateUI();
-
-</script>
-
-</body>
-</html>
+const v
