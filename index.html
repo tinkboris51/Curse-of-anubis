@@ -1,69 +1,140 @@
-
 <!doctype html>
 <html lang="sk">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Curse of Anubis Deluxe</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#06101a">
+<title>Curse of Anubis V3</title>
 
 <style>
 *{box-sizing:border-box}
 
-body{
+:root{
+--gold:#f2c45b;
+--gold2:#fff1a6;
+--bronze:#8c5a1b;
+--blue:#1689ff;
+--blue2:#062b66;
+--ink:#02050a;
+--panel:#08111d
+}
+
+html,body{
 margin:0;
-background:radial-gradient(circle at 50% 0,#12305a,#05080d 45%,#020306);
-color:#fff4cf;
-font-family:Arial,sans-serif
+min-height:100%;
+background:#02050a;
+color:#fff3cf;
+font-family:Arial,Helvetica,sans-serif
 }
 
-.app{
-max-width:1100px;
+body{
+min-height:100vh;
+overflow-x:hidden;
+background:
+radial-gradient(circle at 50% -10%,rgba(41,125,230,.52),transparent 32%),
+linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.7)),
+linear-gradient(180deg,#071a31 0,#06101c 38%,#03060b 70%,#010205 100%)
+}
+
+body:before{
+content:"";
+position:fixed;
+inset:auto 0 0;
+height:38vh;
+pointer-events:none;
+opacity:.75;
+background:
+linear-gradient(155deg,transparent 45%,#060606 46% 70%,transparent 71%) 6% 100%/36% 65% no-repeat,
+linear-gradient(205deg,transparent 45%,#070707 46% 70%,transparent 71%) 88% 100%/40% 72% no-repeat,
+linear-gradient(160deg,transparent 45%,#0a0907 46% 70%,transparent 71%) 35% 100%/34% 55% no-repeat
+}
+
+.game{
+position:relative;
+z-index:1;
+max-width:1200px;
 margin:auto;
-padding:8px
+padding:8px 10px 18px
 }
 
-.title{
+.logo{
 text-align:center;
-font-family:Georgia,serif
+position:relative;
+padding:3px 0 7px
 }
 
-.title small{
+.logo:before,
+.logo:after{
+content:"";
+position:absolute;
+top:49%;
+width:24%;
+height:16px;
+border-top:2px solid #b8842e;
+border-bottom:2px solid #604014;
+opacity:.75
+}
+
+.logo:before{
+left:0;
+transform:skewY(-5deg)
+}
+
+.logo:after{
+right:0;
+transform:skewY(5deg)
+}
+
+.logo small{
 display:block;
-color:#f4c65b;
-letter-spacing:.2em
+font:700 clamp(12px,2vw,20px) Georgia,serif;
+color:#f4ce72;
+letter-spacing:.28em
 }
 
-.title b{
-font-size:clamp(38px,7vw,78px);
-background:linear-gradient(#fff3a6,#e6ad35,#875112);
+.logo strong{
+display:block;
+font:900 clamp(42px,8vw,84px)/.9 Georgia,serif;
+letter-spacing:.04em;
+background:linear-gradient(#fff5b5 0,#f3c65b 36%,#a7651b 67%,#f9df86 100%);
 -webkit-background-clip:text;
+background-clip:text;
 color:transparent;
-filter:drop-shadow(0 4px 0 #4c2b08)
+filter:drop-shadow(0 4px 0 #4f2a09)
+drop-shadow(0 0 18px rgba(255,173,31,.28))
 }
 
-.top{
+.jackpots{
 display:grid;
-grid-template-columns:180px 1fr 180px;
-gap:8px;
-align-items:center
+grid-template-columns:repeat(4,1fr);
+gap:6px;
+margin-bottom:7px
 }
 
-.panel{
-background:linear-gradient(#0b1727,#03080f);
-border:2px solid #9b7129;
-border-radius:14px;
-padding:10px;
-text-align:center
+.jp{
+background:linear-gradient(#101d2d,#050b13);
+border:1px solid #8f6420;
+border-radius:9px;
+text-align:center;
+padding:6px;
+box-shadow:inset 0 0 12px #000
 }
 
-.panel b{
-color:#f5ce65;
-font-size:22px
+.jp span{
+display:block;
+font-size:10px;
+color:#d1a545;
+letter-spacing:.1em
 }
 
-.stage{
+.jp b{
+font-size:clamp(14px,2.4vw,22px);
+color:#fff0a0
+}
+
+.layout{
 display:grid;
-grid-template-columns:145px 1fr 145px;
+grid-template-columns:155px 1fr 155px;
 gap:8px
 }
 
@@ -73,121 +144,259 @@ flex-direction:column;
 gap:8px
 }
 
-.side .panel{flex:1}
+.sidecard{
+background:linear-gradient(180deg,rgba(10,20,34,.97),rgba(3,8,14,.98));
+border:2px solid #875f21;
+border-radius:14px;
+padding:10px;
+text-align:center;
+box-shadow:inset 0 0 0 2px #1e160c,0 8px 20px #0008
+}
+
+.sidecard h3{
+margin:0 0 4px;
+font:700 18px Georgia,serif;
+color:#f1c761
+}
+
+.sidecard .big{
+font-size:26px;
+font-weight:900
+}
+
+.buy{
+margin-top:auto;
+background:linear-gradient(#143f72,#07182b);
+border-color:#c08d30
+}
+
+.buy button{
+width:100%;
+margin-top:8px;
+background:linear-gradient(#f0c85f,#9a651d);
+color:#171008;
+border:0
+}
+
+.machine{
+position:relative;
+padding:12px;
+background:
+linear-gradient(
+90deg,
+#4d2f0c,
+#d3a23b 7%,
+#664112 12%,
+#120c05 15%,
+#120c05 85%,
+#664112 88%,
+#d3a23b 93%,
+#4d2f0c
+);
+border-radius:22px;
+box-shadow:
+0 10px 35px #000,
+0 0 25px rgba(240,183,55,.12)
+}
 
 .reels{
 display:grid;
 grid-template-columns:repeat(5,1fr);
-gap:4px;
-background:#02050a;
-padding:6px;
-border:4px solid #a97a27;
-border-radius:14px;
-box-shadow:0 0 30px #000
+gap:5px;
+background:#010409;
+padding:5px;
+border:2px solid #40290e;
+border-radius:12px;
+overflow:hidden
 }
 
 .reel{
-height:300px;
-overflow:hidden;
+height:306px;
 position:relative;
-background:#06101a
+overflow:hidden;
+background:linear-gradient(#07121f,#02060a)
 }
 
 .strip{
 position:absolute;
-inset:0 auto auto 0;
-width:100%
+top:0;
+left:0;
+right:0
 }
 
 .sym{
-height:100px;
+height:102px;
 display:flex;
 align-items:center;
 justify-content:center;
-border-bottom:1px solid #223650;
-background:radial-gradient(circle,#122238,#05080d 72%)
+position:relative;
+overflow:hidden;
+background:
+radial-gradient(circle at 50% 40%,rgba(24,50,82,.95),rgba(4,8,13,.98) 72%),
+linear-gradient(#0b1420,#03070c);
+border-bottom:1px solid #21334b;
+border-right:1px solid #111c2a
+}
+
+.sym:after{
+content:"";
+position:absolute;
+inset:5px;
+border:1px solid rgba(241,196,91,.09);
+border-radius:10px
 }
 
 .sym svg{
-width:88%;
-height:88%;
-filter:drop-shadow(0 5px 7px #000)
+width:89%;
+height:89%;
+filter:drop-shadow(0 5px 8px #000)
 }
 
 .sym.win{
-outline:3px solid #ffe68a;
+outline:3px solid #ffe886;
 outline-offset:-4px;
-animation:p .45s infinite alternate
+animation:win .45s infinite alternate;
+background:radial-gradient(circle,#4b350a,#07111d 72%)
 }
 
-@keyframes p{
+@keyframes win{
 to{
 transform:scale(1.04);
-filter:brightness(1.4)
+filter:brightness(1.45)
 }
 }
 
-.controls{
+.mobilepanels{
+display:none
+}
+
+.hud{
 display:grid;
-grid-template-columns:1fr 1fr 90px 90px 1fr;
+grid-template-columns:1fr 1fr 94px 1fr 1fr;
 gap:7px;
-margin-top:8px
+align-items:center;
+margin-top:9px
 }
 
-.disp,button{
+.readout,
+button{
+border:2px solid #876020;
+border-radius:12px;
+background:linear-gradient(#11223a,#06101c);
+color:#fff0be;
+box-shadow:inset 0 0 0 1px #1e3755;
 min-height:58px;
-border-radius:11px;
-border:2px solid #8f6623;
-background:linear-gradient(#10213a,#06101d);
-color:#fff2c0;
-font-weight:bold
+font-weight:800
 }
 
-.disp{
+.readout{
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center
 }
 
-.disp small{color:#e4ba54}
+.readout small{
+font-size:10px;
+color:#d4a94a;
+letter-spacing:.08em
+}
+
+.readout b{
+font-size:22px
+}
+
+button{
+padding:8px;
+touch-action:manipulation
+}
+
+button:active{
+transform:translateY(1px)
+}
 
 .spin{
-height:90px;
+width:94px;
+height:94px;
 border-radius:50%;
-background:radial-gradient(circle at 40% 35%,#4db4ff,#0b56b1 45%,#06377a 64%,#f2c65c 66%,#795018 75%);
-font-size:18px
+font-size:17px;
+background:
+radial-gradient(
+circle at 38% 32%,
+#5bc2ff,
+#0f78df 38%,
+#074693 59%,
+#032456 64%,
+#f3c75b 66%,
+#795017 75%,
+#0b0d10 79%
+);
+border:3px solid #efc45b;
+box-shadow:
+0 0 24px rgba(20,137,255,.5),
+inset 0 0 0 4px #674516
 }
 
-.msg{
+.spin:disabled{
+filter:grayscale(.55);
+opacity:.7
+}
+
+.status{
 margin-top:8px;
-padding:10px;
+min-height:46px;
+display:flex;
+align-items:center;
+justify-content:center;
 text-align:center;
-background:#07111c;
-border:1px solid #31527b;
-border-radius:10px
+padding:8px;
+border:1px solid #31557f;
+border-radius:11px;
+background:rgba(5,14,24,.92);
+font-weight:800;
+color:#d9eaff
 }
 
-.features{
+.quick{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:6px;
+margin-top:7px
+}
+
+.quick button{
+min-height:42px;
+font-size:11px
+}
+
+.legend{
 display:grid;
 grid-template-columns:repeat(5,1fr);
 gap:5px;
 margin-top:7px
 }
 
-.features div{
-background:#07111d;
-border:1px solid #284163;
+.legend div{
+background:#06101b;
+border:1px solid #263f61;
 border-radius:8px;
 padding:6px;
 text-align:center;
-font-size:10px;
-color:#aab9cc
+color:#9fb0c5;
+font-size:9px
 }
 
-.features b{
+.legend b{
 display:block;
-color:#f0c65a
+color:#edc45f;
+font-size:11px
+}
+
+.footer{
+text-align:center;
+color:#6e7c8d;
+font-size:10px;
+margin-top:7px
 }
 
 .overlay{
@@ -197,107 +406,229 @@ background:#000d;
 display:none;
 align-items:center;
 justify-content:center;
-z-index:9
+z-index:20;
+padding:15px
 }
 
-.overlay.show{display:flex}
+.overlay.show{
+display:flex
+}
 
-.card{
-width:min(460px,94vw);
-background:#081421;
-border:2px solid #b5842e;
-border-radius:16px;
+.modal{
+width:min(500px,94vw);
+background:linear-gradient(#0d1d31,#050a11);
+border:2px solid #b8842f;
+border-radius:18px;
 padding:18px;
-text-align:center
+text-align:center;
+box-shadow:0 0 50px #000
 }
 
-.card h2{
+.modal h2{
+font:800 32px Georgia,serif;
 color:#f6d168;
-font-family:Georgia,serif
+margin:0 0 8px
 }
 
-@media(max-width:850px){
-.stage{grid-template-columns:1fr}
-.side{display:none}
-.top{grid-template-columns:1fr}
-.top .panel{display:none}
+.modal p{
+color:#c8d7e8
 }
 
-@media(max-width:620px){
-.reel{height:210px}
-.sym{height:70px}
-
-.controls{
-grid-template-columns:1fr 1fr 76px
+.chests{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px
 }
 
-.spin{
-width:76px;
-height:76px
+.chests button{
+font-size:32px;
+min-height:88px
 }
 
-.controls>.disp:last-child{
+@media(max-width:900px){
+
+.layout{
+grid-template-columns:1fr
+}
+
+.side{
 display:none
 }
 
-.features{
+.mobilepanels{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:6px;
+margin:7px 0
+}
+
+.mobilepanels .sidecard{
+padding:7px
+}
+
+.mobilepanels .sidecard h3{
+font-size:13px
+}
+
+.mobilepanels .big{
+font-size:17px
+}
+
+}
+
+@media(max-width:620px){
+
+.game{
+padding:5px
+}
+
+.jackpots{
 grid-template-columns:repeat(2,1fr)
 }
+
+.jp{
+padding:4px
+}
+
+.logo strong{
+font-size:44px
+}
+
+.logo small{
+font-size:12px
+}
+
+.machine{
+padding:8px;
+border-radius:16px
+}
+
+.reel{
+height:216px
+}
+
+.sym{
+height:72px
+}
+
+.hud{
+grid-template-columns:1fr 1fr 80px;
+grid-template-areas:
+"bal bet spin"
+"win auto spin"
+}
+
+.bal{grid-area:bal}
+.bet{grid-area:bet}
+.winr{grid-area:win}
+.auto{grid-area:auto}
+
+.spin{
+grid-area:spin;
+width:80px;
+height:80px
+}
+
+.quick{
+grid-template-columns:repeat(4,1fr)
+}
+
+.quick button{
+font-size:9px;
+padding:5px
+}
+
+.legend{
+grid-template-columns:repeat(2,1fr)
+}
+
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="game">
 
-<div class="top">
-
-<div class="panel">
-JACKPOT<br>
-<b>100,000.00</b>
-</div>
-
-<div class="title">
+<div class="logo">
 <small>CURSE OF</small>
-<b>ANUBIS</b>
+<strong>ANUBIS</strong>
 </div>
 
-<div class="panel">
-FREE SPINS<br>
-<b id="free">0</b>
+<div class="jackpots">
+
+<div class="jp">
+<span>GRAND</span>
+<b>100,000</b>
+</div>
+
+<div class="jp">
+<span>MAJOR</span>
+<b>10,000</b>
+</div>
+
+<div class="jp">
+<span>MINOR</span>
+<b>1,000</b>
+</div>
+
+<div class="jp">
+<span>MINI</span>
+<b>250</b>
 </div>
 
 </div>
 
-<div class="stage">
+<div class="mobilepanels">
 
-<div class="side">
-
-<div class="panel">
-GRAND<br>
-<b>100K</b>
+<div class="sidecard">
+<h3>FREE SPINS</h3>
+<div class="big" id="freeM">0</div>
 </div>
 
-<div class="panel">
-BUY BONUS<br>
-<b id="buy">1000</b>
+<div class="sidecard">
+<h3>MULTIPLIER</h3>
+<div class="big" id="multiM">×1</div>
 </div>
 
 </div>
+
+<div class="layout">
+
+<aside class="side">
+
+<div class="sidecard">
+<h3>FREE SPINS</h3>
+<div class="big" id="free">0</div>
+</div>
+
+<div class="sidecard">
+<h3>MULTIPLIER</h3>
+<div class="big" id="multi">×1</div>
+</div>
+
+<div class="sidecard buy">
+<h3>BUY BONUS</h3>
+<div class="big" id="buyPrice">1000</div>
+<button id="buyBonus">ACTIVATE</button>
+</div>
+
+</aside>
 
 <main>
 
+<div class="machine">
 <div class="reels" id="reels"></div>
+</div>
 
-<div class="controls">
+<div class="hud">
 
-<div class="disp">
+<div class="readout bal">
 <small>BALANCE</small>
 <b id="credit">1000</b>
 </div>
 
-<div class="disp">
+<div class="readout bet">
 <small>BET</small>
 <b id="bet">10</b>
 </div>
@@ -306,82 +637,124 @@ BUY BONUS<br>
 SPIN
 </button>
 
-<button id="auto">
-AUTO
-</button>
-
-<div class="disp">
+<div class="readout winr">
 <small>WIN</small>
 <b id="win">0</b>
 </div>
 
+<button class="auto" id="auto">
+AUTO ×10
+</button>
+
 </div>
 
-<div class="msg" id="msg">
-𓂀 UNLEASH THE CURSE — stlač SPIN
+<div class="quick">
+
+<button id="minus">
+BET −
+</button>
+
+<button id="plus">
+BET +
+</button>
+
+<button id="turbo">
+TURBO OFF
+</button>
+
+<button id="reset">
+RESET
+</button>
+
 </div>
 
-<div class="features">
+<div class="status" id="status">
+𓂀 THE TEMPLE AWAITS — stlač SPIN
+</div>
+
+<div class="legend">
 
 <div>
 <b>ANUBIS WILD</b>
-nahrádza symboly
+nahrádza symbol
 </div>
 
 <div>
-<b>SCARAB</b>
+<b>SCARAB SCATTER</b>
 3+ Free Spins
 </div>
 
 <div>
-<b>BONUS</b>
+<b>BONUS TEMPLE</b>
 3+ Bonus Pick
 </div>
 
 <div>
 <b>TUMBLE</b>
-výhry miznú
+výherné symboly miznú
 </div>
 
 <div>
-<b>MULTI</b>
-až ×10
+<b>MULTIPLIER</b>
+rastie až do ×10
 </div>
 
 </div>
 
 </main>
 
-<div class="side">
+<aside class="side">
 
-<div class="panel">
-MULTIPLIER<br>
-<b id="multi">×1</b>
+<div class="sidecard">
+<h3>ANUBIS POWER</h3>
+<p>
+Wild pomáha vytvárať veľké skupiny symbolov.
+</p>
 </div>
 
-<div class="panel">
-DEMO<br>
-<small>fiktívne kredity</small>
+<div class="sidecard">
+<h3>SCARAB RITUAL</h3>
+<p>
+3 alebo viac scarabov odomkne Free Spins.
+</p>
+</div>
+
+<div class="sidecard">
+<h3>TEMPLE BONUS</h3>
+<p>
+3 bonus symboly otvoria výber truhlice.
+</p>
+</div>
+
+</aside>
+
+</div>
+
+<div class="footer">
+DEMO • fiktívne kredity • bez reálnych peňazí
 </div>
 
 </div>
 
-</div>
-</div>
-
-<div class="overlay" id="ov">
-<div class="card" id="card"></div>
+<div class="overlay" id="overlay">
+<div class="modal" id="modal"></div>
 </div>
 
 <script>
 
-const bets=[5,10,20,50,100];
+const BETS=[
+5,
+10,
+20,
+50,
+100
+];
 
-const T=[
+const TYPES=[
 ["eye",24],
 ["cobra",22],
 ["ankh",18],
-["pyr",14],
+["pyramid",14],
 ["pharaoh",10],
 ["anubis",6],
 ["wild",3],
@@ -390,29 +763,39 @@ const T=[
 ];
 
 let credit=1000;
-let bi=1;
-let free=0;
-let multi=1;
+let betIndex=1;
+let freeSpins=0;
+let multiplier=1;
 let busy=false;
-let auto=0;
+let autoLeft=0;
+let turbo=false;
 let board=[];
 
-const $=x=>document.getElementById(x);
+const $=id=>
+document.getElementById(id);
 
-const sleep=m=>
-new Promise(r=>setTimeout(r,m));
+const sleep=ms=>
+new Promise(
+r=>setTimeout(r,ms)
+);
 
 function pick(){
 
-let n=T.reduce((a,x)=>a+x[1],0);
+let total=
+TYPES.reduce(
+(a,x)=>a+x[1],
+0
+);
 
-let r=Math.random()*n;
+let r=
+Math.random()*total;
 
-for(const x of T){
+for(const x of TYPES){
 
 r-=x[1];
 
-if(r<=0)return x[0];
+if(r<=0)
+return x[0];
 
 }
 
@@ -420,7 +803,7 @@ return "eye";
 
 }
 
-function nb(){
+function makeBoard(){
 
 return Array.from(
 {length:15},
@@ -429,34 +812,65 @@ pick
 
 }
 
-function svg(t){
+function svg(type){
 
-const d=`
+const defs=`
 <defs>
 
-<linearGradient id="g">
-<stop stop-color="#fff0a5"/>
-<stop offset=".5" stop-color="#e2a934"/>
-<stop offset="1" stop-color="#75430f"/>
+<linearGradient
+id="g"
+x1="0"
+x2="1"
+y1="0"
+y2="1">
+
+<stop stop-color="#fff2a9"/>
+
+<stop
+offset=".46"
+stop-color="#e0a633"/>
+
+<stop
+offset="1"
+stop-color="#71410e"/>
+
 </linearGradient>
 
-<linearGradient id="b">
-<stop stop-color="#54baff"/>
-<stop offset="1" stop-color="#083a82"/>
+<linearGradient
+id="b"
+x1="0"
+x2="1">
+
+<stop stop-color="#67c5ff"/>
+
+<stop
+offset="1"
+stop-color="#07377c"/>
+
 </linearGradient>
+
+<radialGradient id="r">
+
+<stop stop-color="#ffcf5d"/>
+
+<stop
+offset="1"
+stop-color="#8e4b12"/>
+
+</radialGradient>
 
 </defs>
 `;
 
-if(t==="eye")
+if(type==="eye")
 
 return `
 <svg viewBox="0 0 100 100">
 
-${d}
+${defs}
 
 <path
-d="M10 52Q50 18 90 52Q50 82 10 52Z"
+d="M8 52Q50 16 92 52Q50 84 8 52Z"
 fill="none"
 stroke="url(#g)"
 stroke-width="7"
@@ -465,45 +879,65 @@ stroke-width="7"
 <circle
 cx="50"
 cy="52"
-r="15"
+r="16"
 fill="url(#b)"
-stroke="#f5cf65"
+stroke="#f5cf66"
 stroke-width="4"
+/>
+
+<circle
+cx="50"
+cy="52"
+r="6"
+fill="#03101c"
+/>
+
+<path
+d="M50 69v15M45 81l-8 8"
+stroke="#d8a43a"
+stroke-width="5"
 />
 
 </svg>
 `;
 
-if(t==="cobra")
+if(type==="cobra")
 
 return `
 <svg viewBox="0 0 100 100">
 
-${d}
+${defs}
 
 <path
-d="M58 87c22-18 16-39 1-44-7-3-7-14 0-20 10-8 21-2 23 7-10-5-17 2-17 9 15 7 19 25 9 38-9 11-27 15-43 8"
+d="M56 89c24-18 19-40 2-46-7-3-7-14 1-20 12-9 24-1 24 9-8-6-16-1-18 6 16 5 23 22 16 37-8 17-30 22-51 12"
 fill="none"
 stroke="url(#g)"
 stroke-width="8"
 />
 
+<path
+d="M62 22q17-11 23 6-10 2-18 13z"
+fill="#236d42"
+stroke="#e7b84d"
+stroke-width="3"
+/>
+
 <circle
-cx="72"
-cy="27"
-r="3"
-fill="#f44"
+cx="75"
+cy="28"
+r="2.5"
+fill="#ff4d27"
 />
 
 </svg>
 `;
 
-if(t==="ankh")
+if(type==="ankh")
 
 return `
 <svg viewBox="0 0 100 100">
 
-${d}
+${defs}
 
 <ellipse
 cx="50"
@@ -516,113 +950,149 @@ stroke-width="8"
 />
 
 <path
-d="M50 49v42M24 63h52"
+d="M50 49v42M23 63h54"
 stroke="url(#g)"
 stroke-width="9"
+stroke-linecap="round"
 />
 
 </svg>
 `;
 
-if(t==="pyr")
+if(type==="pyramid")
 
 return `
 <svg viewBox="0 0 100 100">
 
-${d}
+${defs}
 
 <circle
 cx="78"
 cy="20"
 r="10"
-fill="#ff8a2e"
+fill="#ff8d33"
 />
 
 <path
-d="M12 84L50 18l38 66z"
+d="M10 84L50 16l40 68z"
 fill="url(#g)"
-stroke="#ffe18b"
+stroke="#ffe28e"
 stroke-width="3"
 />
 
 <path
-d="M50 18v66"
-stroke="#6b3c0d"
+d="M50 16v68"
+stroke="#6b3c0e"
 stroke-width="3"
+/>
+
+<path
+d="M10 85h80"
+stroke="#d8a33e"
+stroke-width="5"
 />
 
 </svg>
 `;
 
-if(t==="pharaoh")
+if(type==="pharaoh")
 
 return `
 <svg viewBox="0 0 100 100">
 
-${d}
+${defs}
 
 <path
-d="M24 22Q50 4 76 22l6 25-12 35H30L18 47z"
+d="M24 22Q50 3 76 22l6 24-12 37H30L18 46z"
 fill="url(#g)"
-stroke="#ffe18b"
+stroke="#ffe38f"
 stroke-width="3"
+/>
+
+<path
+d="M28 23h44l-7 13H35z"
+fill="url(#b)"
 />
 
 <ellipse
 cx="50"
-cy="53"
+cy="54"
 rx="18"
 ry="24"
-fill="#d69a47"
+fill="#d59a46"
 />
 
 <path
-d="M28 24h44l-7 12H35z"
-fill="url(#b)"
+d="M41 50h6M53 50h6M44 68q6 4 12 0"
+stroke="#35200e"
+stroke-width="3"
+fill="none"
 />
 
 </svg>
 `;
 
-if(t==="anubis" || t==="wild")
+if(
+type==="anubis" ||
+type==="wild"
+){
 
 return `
 <svg viewBox="0 0 100 100">
 
-${d}
+${defs}
 
 <path
-d="M28 26L38 5l8 28M72 26L62 5l-8 28"
-fill="#0a1421"
-stroke="#e7b94f"
+d="M28 27L38 5l8 28M72 27L62 5l-8 28"
+fill="#07121f"
+stroke="#e7b84d"
 stroke-width="3"
 />
 
 <path
-d="M25 34Q50 18 75 34l-8 43-17 13-17-13z"
-fill="#111c2b"
+d="M24 34Q50 18 76 34l-8 43-18 13-18-13z"
+fill="#101b2a"
 stroke="url(#g)"
 stroke-width="4"
 />
 
-<circle
-cx="41"
-cy="49"
-r="4"
-fill="#4bb9ff"
+<path
+d="M36 49l11 2-7 5M64 49l-11 2 7 5"
+stroke="#4cb9ff"
+stroke-width="5"
 />
 
-<circle
-cx="59"
-cy="49"
-r="4"
-fill="#4bb9ff"
+<path
+d="M44 69h12"
+stroke="#ddb04a"
+stroke-width="4"
 />
 
 ${
-t==="wild"
+type==="wild"
 ?
-'<text x="50" y="96" text-anchor="middle" fill="#f8d66e" font-size="15" font-weight="bold">WILD</text>'
+`
+<rect
+x="17"
+y="77"
+width="66"
+height="18"
+rx="9"
+fill="#071523"
+stroke="#e9bd55"
+stroke-width="2"
+/>
+
+<text
+x="50"
+y="90"
+text-anchor="middle"
+fill="#ffe17c"
+font-size="13"
+font-weight="bold">
+WILD
+</text>
+`
 :
 ""
 }
@@ -630,12 +1100,14 @@ t==="wild"
 </svg>
 `;
 
-if(t==="scatter")
+}
+
+if(type==="scatter")
 
 return `
 <svg viewBox="0 0 100 100">
 
-${d}
+${defs}
 
 <ellipse
 cx="50"
@@ -643,24 +1115,34 @@ cy="58"
 rx="20"
 ry="27"
 fill="url(#b)"
-stroke="#f2c658"
+stroke="#f2c657"
 stroke-width="5"
 />
 
 <circle
 cx="50"
-cy="25"
+cy="24"
 r="11"
-fill="#ff522e"
-stroke="#ffd66b"
+fill="#ff5b2d"
+stroke="#ffd76e"
 stroke-width="4"
 />
 
 <path
-d="M30 48L14 35M70 48L86 35M30 65L13 72M70 65L87 72"
-stroke="#eec24f"
+d="M30 49L13 35M70 49L87 35M29 64L11 71M71 64L89 71"
+stroke="#eac04d"
 stroke-width="6"
 />
+
+<text
+x="50"
+y="95"
+text-anchor="middle"
+fill="#ffe17c"
+font-size="11"
+font-weight="bold">
+SCATTER
+</text>
 
 </svg>
 `;
@@ -668,28 +1150,34 @@ stroke-width="6"
 return `
 <svg viewBox="0 0 100 100">
 
-${d}
+${defs}
 
 <path
-d="M18 79V42l13-18h38l13 18v37z"
-fill="#160f09"
+d="M18 79V43l13-19h38l13 19v36z"
+fill="#140e08"
 stroke="url(#g)"
 stroke-width="5"
+/>
+
+<path
+d="M28 48h44M35 48v31M50 48v31M65 48v31"
+stroke="#b67a28"
+stroke-width="4"
 />
 
 <circle
 cx="50"
 cy="38"
-r="9"
-fill="#ff8b2c"
+r="10"
+fill="url(#r)"
 />
 
 <text
 x="50"
-y="94"
+y="95"
 text-anchor="middle"
-fill="#f6d169"
-font-size="14"
+fill="#ffe17c"
+font-size="11"
 font-weight="bold">
 BONUS
 </text>
@@ -699,210 +1187,514 @@ BONUS
 
 }
 
-function upd(){
+function updateUI(){
 
 $("credit").textContent=
 Math.floor(credit);
 
 $("bet").textContent=
-bets[bi];
+BETS[betIndex];
 
 $("free").textContent=
-free;
+freeSpins;
 
 $("multi").textContent=
-"×"+multi;
+"×"+multiplier;
 
-$("buy").textContent=
-bets[bi]*100;
+$("freeM").textContent=
+freeSpins;
+
+$("multiM").textContent=
+"×"+multiplier;
+
+$("buyPrice").textContent=
+BETS[betIndex]*100;
+
+$("turbo").textContent=
+turbo
+?
+"TURBO ON"
+:
+"TURBO OFF";
 
 }
 
-function draw(hi=[]){
+function draw(highlight=[]){
 
 $("reels").innerHTML="";
 
 for(let c=0;c<5;c++){
 
-let r=document.createElement("div");
+const reel=
+document.createElement("div");
 
-r.className="reel";
+reel.className="reel";
 
-let s=document.createElement("div");
+const strip=
+document.createElement("div");
 
-s.className="strip";
+strip.className="strip";
 
-for(let y=0;y<3;y++){
+for(let r=0;r<3;r++){
 
-let i=y*5+c;
+const idx=r*5+c;
 
-let d=document.createElement("div");
+const s=
+document.createElement("div");
 
-d.className=
-"sym"+(hi.includes(i)?" win":"");
-
-d.innerHTML=
-svg(board[i]);
-
-s.appendChild(d);
-
-}
-
-r.appendChild(s);
-
-$("reels").appendChild(r);
-
-}
-
-}
-
-function evalw(){
-
-let m={};
-let w=[];
-
-board.forEach((s,i)=>{
-
-if(s==="wild")
-
-w.push(i);
-
-else if(
-!["scatter","bonus"].includes(s)
-){
-
-if(!m[s])m[s]=[];
-
-m[s].push(i);
-
-}
-
-});
-
-let p={
-eye:2,
-cobra:2,
-ankh:3,
-pyr:4,
-pharaoh:6,
-anubis:8
-};
-
-let a=[];
-
-for(const k in m){
-
-let ids=[
-...m[k],
-...w
-];
-
-if(ids.length>=8)
-
-a.push({
-ids,
-pay:p[k]||2
-});
-
-}
-
-return a;
-
-}
-
-async function tumble(b){
-
-let tot=0;
-let round=0;
-
-while(round<5){
-
-let w=evalw();
-
-if(!w.length)break;
-
-round++;
-
-let ids=[];
-let amt=0;
-
-w.forEach(x=>{
-
-amt+=
-b*x.pay*multi;
-
-x.ids.forEach(i=>{
-
-if(!ids.includes(i))
-
-ids.push(i);
-
-});
-
-});
-
-amt=Math.floor(amt);
-
-tot+=amt;
-
-draw(ids);
-
-$("msg").textContent=
-`🔥 TUMBLE ${round} • ×${multi} • +${amt}`;
-
-await sleep(450);
-
-ids.forEach(i=>
-board[i]=null
+s.className=
+"sym"+
+(
+highlight.includes(idx)
+?
+" win"
+:
+""
 );
 
-board=
-board.map(x=>
-x===null?pick():x
+s.innerHTML=
+svg(board[idx]);
+
+strip.appendChild(s);
+
+}
+
+reel.appendChild(strip);
+
+$("reels").appendChild(reel);
+
+}
+
+}
+
+async function animate(){
+
+$("reels").innerHTML="";
+
+const h=
+window.innerWidth<=620
+?
+72
+:
+102;
+
+const fillers=14;
+
+const strips=[];
+
+for(let c=0;c<5;c++){
+
+const reel=
+document.createElement("div");
+
+reel.className="reel";
+
+const strip=
+document.createElement("div");
+
+strip.className="strip";
+
+for(let i=0;i<fillers;i++){
+
+const s=
+document.createElement("div");
+
+s.className="sym";
+
+s.innerHTML=
+svg(pick());
+
+strip.appendChild(s);
+
+}
+
+for(let r=0;r<3;r++){
+
+const s=
+document.createElement("div");
+
+s.className="sym";
+
+s.innerHTML=
+svg(board[r*5+c]);
+
+strip.appendChild(s);
+
+}
+
+reel.appendChild(strip);
+
+$("reels").appendChild(reel);
+
+strips.push(strip);
+
+}
+
+await sleep(30);
+
+const base=
+turbo
+?
+260
+:
+720;
+
+const step=
+turbo
+?
+45
+:
+110;
+
+const target=
+-(fillers*h);
+
+strips.forEach(
+(s,i)=>{
+
+s.style.transition=
+`transform ${base+i*step}ms cubic-bezier(.08,.74,.16,1.02)`;
+
+s.style.transform=
+`translateY(${target}px)`;
+
+}
 );
 
-multi=
-Math.min(10,multi+1);
-
-upd();
-draw();
-
-await sleep(220);
+await sleep(
+base+step*4+100
+);
 
 }
 
-return tot;
-
-}
-
-function count(x){
+function count(type){
 
 return board.filter(
-v=>v===x
+x=>x===type
 ).length;
 
 }
 
-function show(h){
+function evaluate(){
 
-$("card").innerHTML=h;
+const groups={};
 
-$("ov").classList.add("show");
+const wilds=[];
+
+board.forEach(
+(s,i)=>{
+
+if(s==="wild"){
+
+wilds.push(i);
+
+}else if(
+!["scatter","bonus"].includes(s)
+){
+
+if(!groups[s])
+groups[s]=[];
+
+groups[s].push(i);
+
+}
+
+}
+);
+
+const pays={
+eye:2,
+cobra:2,
+ankh:3,
+pyramid:4,
+pharaoh:6,
+anubis:8
+};
+
+const wins=[];
+
+for(const k in groups){
+
+const ids=[
+...groups[k],
+...wilds
+];
+
+if(ids.length>=8){
+
+wins.push({
+ids,
+pay:pays[k]||2
+});
+
+}
+
+}
+
+return wins;
+
+}
+
+async function tumble(bet){
+
+let total=0;
+let round=0;
+
+while(round<5){
+
+const wins=
+evaluate();
+
+if(!wins.length)
+break;
+
+round++;
+
+const ids=[];
+
+let amount=0;
+
+wins.forEach(
+w=>{
+
+amount+=
+bet*w.pay*multiplier;
+
+w.ids.forEach(
+i=>{
+
+if(!ids.includes(i))
+ids.push(i);
+
+}
+);
+
+}
+);
+
+amount=
+Math.floor(amount);
+
+total+=amount;
+
+draw(ids);
+
+$("status").textContent=
+`🔥 TUMBLE ${round} • ×${multiplier} • +${amount}`;
+
+await sleep(
+turbo
+?
+170
+:
+470
+);
+
+ids.forEach(
+i=>board[i]=null
+);
+
+board=
+board.map(
+x=>x===null
+?
+pick()
+:
+x
+);
+
+multiplier=
+Math.min(
+10,
+multiplier+1
+);
+
+updateUI();
+
+draw();
+
+await sleep(
+turbo
+?
+100
+:
+240
+);
+
+}
+
+return total;
+
+}
+
+function show(html){
+
+$("modal").innerHTML=
+html;
+
+$("overlay")
+.classList
+.add("show");
+
+}
+
+function hide(){
+
+$("overlay")
+.classList
+.remove("show");
+
+}
+
+async function bonusPick(bet){
+
+return new Promise(
+resolve=>{
+
+show(`
+<h2>TEMPLE BONUS</h2>
+
+<p>
+Vyber jednu truhlicu.
+</p>
+
+<div class="chests">
+
+<button>🏺</button>
+<button>🏺</button>
+<button>🏺</button>
+
+</div>
+`);
+
+document
+.querySelectorAll(".chests button")
+.forEach(
+btn=>btn.onclick=()=>{
+
+const values=[
+10,
+15,
+20,
+30,
+50
+];
+
+const v=
+values[
+Math.floor(
+Math.random()*values.length
+)
+]
+*
+bet;
+
+btn.textContent="💰";
+
+setTimeout(
+()=>{
+
+hide();
+
+resolve(v);
+
+},
+450
+);
+
+}
+);
+
+}
+);
+
+}
+
+async function countWin(value){
+
+if(value<=0)
+return;
+
+const start=credit;
+
+const duration=
+turbo
+?
+180
+:
+650;
+
+const t0=
+Date.now();
+
+return new Promise(
+resolve=>{
+
+function frame(){
+
+const p=
+Math.min(
+1,
+(Date.now()-t0)/duration
+);
+
+const shown=
+Math.floor(
+value*
+(
+1-Math.pow(1-p,3)
+)
+);
+
+$("win").textContent=
+shown;
+
+$("credit").textContent=
+Math.floor(
+start+shown
+);
+
+if(p<1){
+
+requestAnimationFrame(frame);
+
+}else{
+
+credit+=value;
+
+updateUI();
+
+resolve();
+
+}
+
+}
+
+frame();
+
+}
+);
 
 }
 
 async function spin(){
 
-if(busy)return;
+if(busy)
+return;
 
-let b=bets[bi];
+const bet=
+BETS[betIndex];
 
-let fs=free>0;
+const isFree=
+freeSpins>0;
 
-if(!fs && credit<b){
+if(
+!isFree &&
+credit<bet
+){
 
-$("msg").textContent=
-"Nemáš dosť kreditov.";
+$("status").textContent=
+"Nemáš dostatok kreditov.";
 
 return;
 
@@ -910,154 +1702,186 @@ return;
 
 busy=true;
 
-if(fs){
+$("spin").disabled=true;
 
-free--;
+$("win").textContent="0";
+
+if(isFree){
+
+freeSpins--;
 
 }else{
 
-credit-=b;
-multi=1;
+credit-=bet;
+
+multiplier=1;
 
 }
 
-upd();
+updateUI();
 
-$("win").textContent=0;
-
-$("msg").textContent=
-fs
+$("status").textContent=
+isFree
 ?
 "🎁 FREE SPIN…"
 :
-"𓂀 Valce sa točia…";
+"𓂀 ANUBIS AWAKENS…";
 
-board=nb();
+board=
+makeBoard();
 
-for(let i=0;i<6;i++){
-
-draw();
-
-board=nb();
-
-await sleep(75);
-
-}
+await animate();
 
 draw();
 
-let sc=count("scatter");
-let bo=count("bonus");
+const scat=
+count("scatter");
 
-let tot=
-await tumble(b);
+const bonus=
+count("bonus");
 
-if(sc>=3){
+let total=
+await tumble(bet);
 
-let a=
-sc>=5
+if(scat>=3){
+
+const award=
+scat>=5
 ?
 15
 :
-sc===4
+(
+scat===4
 ?
 10
 :
-8;
+8
+);
 
-free+=a;
+freeSpins+=award;
 
-multi=
-Math.max(2,multi);
+multiplier=
+Math.max(
+2,
+multiplier
+);
 
-upd();
-
-show(`
-<h2>${a} FREE SPINS</h2>
-
-<button onclick="
-document
-.getElementById('ov')
-.classList.remove('show')
-">
-POKRAČOVAŤ
-</button>
-`);
-
-}
-
-if(bo>=3){
-
-let v=
-[10,15,20,30,50]
-[
-Math.floor(
-Math.random()*5
-)
-]
-*b;
-
-tot+=v;
+updateUI();
 
 show(`
-<h2>BONUS TEMPLE</h2>
+<h2>SCARAB RITUAL</h2>
 
-<p>
-Výhra ${v} kreditov
+<p style="font-size:28px">
+${award} FREE SPINS
 </p>
 
-<button onclick="
-document
-.getElementById('ov')
-.classList.remove('show')
-">
+<button id="continueFS">
 POKRAČOVAŤ
 </button>
 `);
 
+setTimeout(
+()=>{
+
+$("continueFS").onclick=
+hide;
+
+},
+0
+);
+
 }
 
-if(tot>0){
+if(bonus>=3){
 
-credit+=tot;
+const bonusWin=
+await bonusPick(bet);
 
-$("win").textContent=
-tot;
+total+=bonusWin;
 
-$("msg").textContent=
-`WIN +${tot}`;
+$("status").textContent=
+`🏺 BONUS +${bonusWin}`;
+
+}
+
+if(total>0){
+
+await countWin(total);
+
+if(total>=bet*20){
+
+show(`
+<h2>MEGA WIN</h2>
+
+<p style="font-size:34px">
+${total}
+</p>
+
+<button id="megaContinue">
+POKRAČOVAŤ
+</button>
+`);
+
+setTimeout(
+()=>{
+
+$("megaContinue").onclick=
+hide;
+
+},
+0
+);
+
+}else{
+
+$("status").textContent=
+`WIN +${total}`;
+
+}
 
 }else if(
-sc<3 &&
-bo<3
+scat<3 &&
+bonus<3
 ){
 
-$("msg").textContent=
-"Bez výhry.";
+$("status").textContent=
+"Chrám ostáva ticho… bez výhry.";
 
 }
 
-upd();
+updateUI();
 
 busy=false;
 
-if(free>0)
+$("spin").disabled=false;
+
+if(freeSpins>0){
 
 setTimeout(
 spin,
-600
+turbo
+?
+190
+:
+560
 );
 
-else if(auto>0){
+}else if(autoLeft>0){
 
-auto--;
+autoLeft--;
 
-if(auto>0)
+if(autoLeft>0){
 
 setTimeout(
 spin,
-400
+turbo
+?
+170
+:
+390
 );
+
+}
 
 }
 
@@ -1070,18 +1894,136 @@ $("auto").onclick=()=>{
 
 if(!busy){
 
-auto=10;
+autoLeft=10;
+
 spin();
 
 }
 
 };
 
-board=nb();
+$("minus").onclick=()=>{
+
+if(
+!busy &&
+betIndex>0
+){
+
+betIndex--;
+
+updateUI();
+
+}
+
+};
+
+$("plus").onclick=()=>{
+
+if(
+!busy &&
+betIndex<BETS.length-1
+){
+
+betIndex++;
+
+updateUI();
+
+}
+
+};
+
+$("turbo").onclick=()=>{
+
+turbo=!turbo;
+
+updateUI();
+
+};
+
+$("reset").onclick=()=>{
+
+if(!busy){
+
+credit=1000;
+
+freeSpins=0;
+
+multiplier=1;
+
+autoLeft=0;
+
+$("win").textContent=0;
+
+$("status").textContent=
+"𓂀 THE TEMPLE AWAITS — stlač SPIN";
+
+updateUI();
+
+}
+
+};
+
+$("buyBonus").onclick=()=>{
+
+if(busy)
+return;
+
+const price=
+BETS[betIndex]*100;
+
+if(credit<price){
+
+$("status").textContent=
+"Nemáš dostatok demo kreditov na bonus.";
+
+return;
+
+}
+
+credit-=price;
+
+freeSpins+=10;
+
+multiplier=2;
+
+updateUI();
+
+show(`
+<h2>BONUS ACTIVATED</h2>
+
+<p>
+10 FREE SPINS • MULTIPLIER ×2
+</p>
+
+<button id="startBonus">
+ZAČAŤ
+</button>
+`);
+
+setTimeout(
+()=>{
+
+$("startBonus").onclick=
+()=>{
+
+hide();
+
+spin();
+
+};
+
+},
+0
+);
+
+};
+
+board=
+makeBoard();
 
 draw();
 
-upd();
+updateUI();
 
 </script>
 
