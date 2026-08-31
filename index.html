@@ -1,160 +1,193 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="sk">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Curse of Anubis</title>
+<title>Curse of Anubis Deluxe</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
 margin:0;
-min-height:100vh;
-background:radial-gradient(circle at top,#4b3014,#160e07 45%,#050403);
-color:#fff1c4;
-font-family:Arial,sans-serif;
-padding:10px;
+background:radial-gradient(circle at 50% 0,#12305a,#05080d 45%,#020306);
+color:#fff4cf;
+font-family:Arial,sans-serif
 }
-.game{max-width:850px;margin:auto}
-h1{
-text-align:center;
-color:#ffe18a;
-font-size:clamp(25px,7vw,48px);
-margin:8px 0 2px;
-}
-.sub{text-align:center;color:#aa9672;font-size:11px;margin-bottom:12px}
 
-.hud{
+.app{
+max-width:1100px;
+margin:auto;
+padding:8px
+}
+
+.title{
+text-align:center;
+font-family:Georgia,serif
+}
+
+.title small{
+display:block;
+color:#f4c65b;
+letter-spacing:.2em
+}
+
+.title b{
+font-size:clamp(38px,7vw,78px);
+background:linear-gradient(#fff3a6,#e6ad35,#875112);
+-webkit-background-clip:text;
+color:transparent;
+filter:drop-shadow(0 4px 0 #4c2b08)
+}
+
+.top{
 display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:5px;
+grid-template-columns:180px 1fr 180px;
+gap:8px;
+align-items:center
 }
-.box{
-background:#171008;
-border:1px solid #725025;
-border-radius:10px;
-padding:8px;
-text-align:center;
-}
-.box small{display:block;color:#a99878;font-size:9px}
-.box b{font-size:18px}
 
-.machine{
-margin-top:8px;
-padding:8px;
-background:#120c07;
-border:2px solid #a27632;
-border-radius:18px;
+.panel{
+background:linear-gradient(#0b1727,#03080f);
+border:2px solid #9b7129;
+border-radius:14px;
+padding:10px;
+text-align:center
 }
+
+.panel b{
+color:#f5ce65;
+font-size:22px
+}
+
+.stage{
+display:grid;
+grid-template-columns:145px 1fr 145px;
+gap:8px
+}
+
+.side{
+display:flex;
+flex-direction:column;
+gap:8px
+}
+
+.side .panel{flex:1}
 
 .reels{
 display:grid;
 grid-template-columns:repeat(5,1fr);
 gap:4px;
-background:#050403;
-padding:5px;
-border-radius:12px;
+background:#02050a;
+padding:6px;
+border:4px solid #a97a27;
+border-radius:14px;
+box-shadow:0 0 30px #000
 }
 
 .reel{
-height:225px;
+height:300px;
 overflow:hidden;
-border:1px solid #69491f;
-border-radius:8px;
-background:#181008;
 position:relative;
+background:#06101a
 }
 
 .strip{
 position:absolute;
-left:0;
-right:0;
-top:0;
+inset:0 auto auto 0;
+width:100%
 }
 
-.symbol{
-height:75px;
+.sym{
+height:100px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:42px;
-background:linear-gradient(#302012,#160e08);
-border-bottom:1px solid #513719;
+border-bottom:1px solid #223650;
+background:radial-gradient(circle,#122238,#05080d 72%)
 }
 
-.win{
-background:#5c4018;
-outline:3px solid #ffe28b;
+.sym svg{
+width:88%;
+height:88%;
+filter:drop-shadow(0 5px 7px #000)
+}
+
+.sym.win{
+outline:3px solid #ffe68a;
 outline-offset:-4px;
-animation:pulse .4s infinite alternate;
+animation:p .45s infinite alternate
 }
 
-@keyframes pulse{
-to{transform:scale(1.05);filter:brightness(1.4)}
+@keyframes p{
+to{
+transform:scale(1.04);
+filter:brightness(1.4)
+}
 }
 
 .controls{
 display:grid;
-grid-template-columns:1fr 1fr 1.5fr 1fr 1fr;
-gap:5px;
-margin-top:8px;
+grid-template-columns:1fr 1fr 90px 90px 1fr;
+gap:7px;
+margin-top:8px
 }
 
-button{
-min-height:46px;
-border:1px solid #795529;
-border-radius:10px;
-background:#20150b;
-color:#fff0c7;
-font-weight:bold;
+.disp,button{
+min-height:58px;
+border-radius:11px;
+border:2px solid #8f6623;
+background:linear-gradient(#10213a,#06101d);
+color:#fff2c0;
+font-weight:bold
 }
+
+.disp{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center
+}
+
+.disp small{color:#e4ba54}
 
 .spin{
-background:linear-gradient(#f1c768,#95642a);
-color:#201306;
-font-size:18px;
+height:90px;
+border-radius:50%;
+background:radial-gradient(circle at 40% 35%,#4db4ff,#0b56b1 45%,#06377a 64%,#f2c65c 66%,#795018 75%);
+font-size:18px
 }
 
-.active{outline:2px solid #ffe28b}
-
-.message{
+.msg{
 margin-top:8px;
 padding:10px;
-min-height:45px;
-display:flex;
-align-items:center;
-justify-content:center;
 text-align:center;
-background:#0e0906;
-border:1px solid #49331c;
-border-radius:10px;
-font-weight:bold;
+background:#07111c;
+border:1px solid #31527b;
+border-radius:10px
 }
 
 .features{
 display:grid;
-grid-template-columns:repeat(4,1fr);
+grid-template-columns:repeat(5,1fr);
 gap:5px;
-margin-top:7px;
+margin-top:7px
 }
 
 .features div{
-background:#15100a;
-border:1px solid #3f2c18;
+background:#07111d;
+border:1px solid #284163;
 border-radius:8px;
-padding:7px;
+padding:6px;
 text-align:center;
 font-size:10px;
-color:#aa9672;
+color:#aab9cc
 }
 
-.features b{color:#f3d27d}
-
-.demo{
-text-align:center;
-font-size:10px;
-color:#70634e;
-margin-top:10px;
+.features b{
+display:block;
+color:#f0c65a
 }
 
 .overlay{
@@ -164,460 +197,697 @@ background:#000d;
 display:none;
 align-items:center;
 justify-content:center;
-z-index:20;
-padding:15px;
+z-index:9
 }
 
 .overlay.show{display:flex}
 
 .card{
-width:min(450px,95vw);
-background:linear-gradient(#302112,#100b07);
-border:2px solid #a97b37;
-border-radius:17px;
-padding:20px;
-text-align:center;
+width:min(460px,94vw);
+background:#081421;
+border:2px solid #b5842e;
+border-radius:16px;
+padding:18px;
+text-align:center
 }
 
 .card h2{
-font-size:32px;
-color:#ffe18a;
-margin:0 0 10px;
+color:#f6d168;
+font-family:Georgia,serif
 }
 
-.chests{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
+@media(max-width:850px){
+.stage{grid-template-columns:1fr}
+.side{display:none}
+.top{grid-template-columns:1fr}
+.top .panel{display:none}
 }
 
-.chests button{
-font-size:40px;
-min-height:90px;
+@media(max-width:620px){
+.reel{height:210px}
+.sym{height:70px}
+
+.controls{
+grid-template-columns:1fr 1fr 76px
 }
 
-@media(max-width:600px){
-.hud{grid-template-columns:repeat(2,1fr)}
-.hud .box:last-child{grid-column:span 2}
-.reel{height:180px}
-.symbol{height:60px;font-size:34px}
-.controls{grid-template-columns:1fr 1fr 1.4fr}
-.features{grid-template-columns:repeat(2,1fr)}
+.spin{
+width:76px;
+height:76px
+}
+
+.controls>.disp:last-child{
+display:none
+}
+
+.features{
+grid-template-columns:repeat(2,1fr)
+}
 }
 </style>
 </head>
 
 <body>
 
-<div class="game">
+<div class="app">
 
-<h1>𓂀 CURSE OF ANUBIS 𓂀</h1>
-<div class="sub">DELUXE DEMO • TUMBLE • FREE SPINS • BONUS</div>
+<div class="top">
 
-<div class="hud">
-<div class="box"><small>KREDIT</small><b id="credit">1000</b></div>
-<div class="box"><small>STÁVKA</small><b id="bet">10</b></div>
-<div class="box"><small>VÝHRA</small><b id="win">0</b></div>
-<div class="box"><small>FREE SPINS</small><b id="free">0</b></div>
-<div class="box"><small>NÁSOBIČ</small><b id="multi">×1</b></div>
+<div class="panel">
+JACKPOT<br>
+<b>100,000.00</b>
 </div>
 
-<div class="machine">
+<div class="title">
+<small>CURSE OF</small>
+<b>ANUBIS</b>
+</div>
+
+<div class="panel">
+FREE SPINS<br>
+<b id="free">0</b>
+</div>
+
+</div>
+
+<div class="stage">
+
+<div class="side">
+
+<div class="panel">
+GRAND<br>
+<b>100K</b>
+</div>
+
+<div class="panel">
+BUY BONUS<br>
+<b id="buy">1000</b>
+</div>
+
+</div>
+
+<main>
 
 <div class="reels" id="reels"></div>
 
 <div class="controls">
-<button id="minus">− BET</button>
-<button id="turbo">⚡ TURBO</button>
-<button class="spin" id="spin">SPIN</button>
-<button id="auto">AUTO ×10</button>
-<button id="plus">+ BET</button>
+
+<div class="disp">
+<small>BALANCE</small>
+<b id="credit">1000</b>
 </div>
 
-<div class="message" id="message">
-𓂀 Stlač SPIN
+<div class="disp">
+<small>BET</small>
+<b id="bet">10</b>
+</div>
+
+<button class="spin" id="spin">
+SPIN
+</button>
+
+<button id="auto">
+AUTO
+</button>
+
+<div class="disp">
+<small>WIN</small>
+<b id="win">0</b>
+</div>
+
+</div>
+
+<div class="msg" id="msg">
+𓂀 UNLEASH THE CURSE — stlač SPIN
 </div>
 
 <div class="features">
-<div><b>🐕 WILD</b><br>Nahrádza symboly</div>
-<div><b>🪲 SCATTER</b><br>3+ = Free Spins</div>
-<div><b>☥ BONUS</b><br>3+ = Bonus hra</div>
-<div><b>🔥 TUMBLE</b><br>Výherné symboly miznú</div>
+
+<div>
+<b>ANUBIS WILD</b>
+nahrádza symboly
+</div>
+
+<div>
+<b>SCARAB</b>
+3+ Free Spins
+</div>
+
+<div>
+<b>BONUS</b>
+3+ Bonus Pick
+</div>
+
+<div>
+<b>TUMBLE</b>
+výhry miznú
+</div>
+
+<div>
+<b>MULTI</b>
+až ×10
 </div>
 
 </div>
 
-<div class="demo">
-DEMO • Fiktívne kredity • Bez reálnych peňazí
+</main>
+
+<div class="side">
+
+<div class="panel">
+MULTIPLIER<br>
+<b id="multi">×1</b>
+</div>
+
+<div class="panel">
+DEMO<br>
+<small>fiktívne kredity</small>
 </div>
 
 </div>
 
-<div class="overlay" id="overlay">
+</div>
+</div>
+
+<div class="overlay" id="ov">
 <div class="card" id="card"></div>
 </div>
 
 <script>
 
-const symbols=["🦂","🐍","🏺","👁️","💎","👑","🐕","🪲","☥"];
-const weights=[24,22,18,14,10,6,3,2,1];
-
 const bets=[5,10,20,50,100];
 
+const T=[
+["eye",24],
+["cobra",22],
+["ankh",18],
+["pyr",14],
+["pharaoh",10],
+["anubis",6],
+["wild",3],
+["scatter",2],
+["bonus",1]
+];
+
 let credit=1000;
-let betIndex=1;
-let freeSpins=0;
-let multiplier=1;
-let turbo=false;
+let bi=1;
+let free=0;
+let multi=1;
 let busy=false;
 let auto=0;
 let board=[];
 
-const $=id=>document.getElementById(id);
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const $=x=>document.getElementById(x);
+
+const sleep=m=>
+new Promise(r=>setTimeout(r,m));
 
 function pick(){
 
-let total=weights.reduce((a,b)=>a+b,0);
-let r=Math.random()*total;
+let n=T.reduce((a,x)=>a+x[1],0);
 
-for(let i=0;i<symbols.length;i++){
-r-=weights[i];
-if(r<=0)return symbols[i];
-}
+let r=Math.random()*n;
 
-return symbols[0];
+for(const x of T){
 
-}
+r-=x[1];
 
-function newBoard(){
-
-return Array.from({length:15},()=>pick());
+if(r<=0)return x[0];
 
 }
 
-function update(){
-
-$("credit").textContent=Math.floor(credit);
-$("bet").textContent=bets[betIndex];
-$("free").textContent=freeSpins;
-$("multi").textContent="×"+multiplier;
+return "eye";
 
 }
 
-function draw(highlight=[]){
+function nb(){
+
+return Array.from(
+{length:15},
+pick
+);
+
+}
+
+function svg(t){
+
+const d=`
+<defs>
+
+<linearGradient id="g">
+<stop stop-color="#fff0a5"/>
+<stop offset=".5" stop-color="#e2a934"/>
+<stop offset="1" stop-color="#75430f"/>
+</linearGradient>
+
+<linearGradient id="b">
+<stop stop-color="#54baff"/>
+<stop offset="1" stop-color="#083a82"/>
+</linearGradient>
+
+</defs>
+`;
+
+if(t==="eye")
+
+return `
+<svg viewBox="0 0 100 100">
+
+${d}
+
+<path
+d="M10 52Q50 18 90 52Q50 82 10 52Z"
+fill="none"
+stroke="url(#g)"
+stroke-width="7"
+/>
+
+<circle
+cx="50"
+cy="52"
+r="15"
+fill="url(#b)"
+stroke="#f5cf65"
+stroke-width="4"
+/>
+
+</svg>
+`;
+
+if(t==="cobra")
+
+return `
+<svg viewBox="0 0 100 100">
+
+${d}
+
+<path
+d="M58 87c22-18 16-39 1-44-7-3-7-14 0-20 10-8 21-2 23 7-10-5-17 2-17 9 15 7 19 25 9 38-9 11-27 15-43 8"
+fill="none"
+stroke="url(#g)"
+stroke-width="8"
+/>
+
+<circle
+cx="72"
+cy="27"
+r="3"
+fill="#f44"
+/>
+
+</svg>
+`;
+
+if(t==="ankh")
+
+return `
+<svg viewBox="0 0 100 100">
+
+${d}
+
+<ellipse
+cx="50"
+cy="28"
+rx="17"
+ry="21"
+fill="none"
+stroke="url(#g)"
+stroke-width="8"
+/>
+
+<path
+d="M50 49v42M24 63h52"
+stroke="url(#g)"
+stroke-width="9"
+/>
+
+</svg>
+`;
+
+if(t==="pyr")
+
+return `
+<svg viewBox="0 0 100 100">
+
+${d}
+
+<circle
+cx="78"
+cy="20"
+r="10"
+fill="#ff8a2e"
+/>
+
+<path
+d="M12 84L50 18l38 66z"
+fill="url(#g)"
+stroke="#ffe18b"
+stroke-width="3"
+/>
+
+<path
+d="M50 18v66"
+stroke="#6b3c0d"
+stroke-width="3"
+/>
+
+</svg>
+`;
+
+if(t==="pharaoh")
+
+return `
+<svg viewBox="0 0 100 100">
+
+${d}
+
+<path
+d="M24 22Q50 4 76 22l6 25-12 35H30L18 47z"
+fill="url(#g)"
+stroke="#ffe18b"
+stroke-width="3"
+/>
+
+<ellipse
+cx="50"
+cy="53"
+rx="18"
+ry="24"
+fill="#d69a47"
+/>
+
+<path
+d="M28 24h44l-7 12H35z"
+fill="url(#b)"
+/>
+
+</svg>
+`;
+
+if(t==="anubis" || t==="wild")
+
+return `
+<svg viewBox="0 0 100 100">
+
+${d}
+
+<path
+d="M28 26L38 5l8 28M72 26L62 5l-8 28"
+fill="#0a1421"
+stroke="#e7b94f"
+stroke-width="3"
+/>
+
+<path
+d="M25 34Q50 18 75 34l-8 43-17 13-17-13z"
+fill="#111c2b"
+stroke="url(#g)"
+stroke-width="4"
+/>
+
+<circle
+cx="41"
+cy="49"
+r="4"
+fill="#4bb9ff"
+/>
+
+<circle
+cx="59"
+cy="49"
+r="4"
+fill="#4bb9ff"
+/>
+
+${
+t==="wild"
+?
+'<text x="50" y="96" text-anchor="middle" fill="#f8d66e" font-size="15" font-weight="bold">WILD</text>'
+:
+""
+}
+
+</svg>
+`;
+
+if(t==="scatter")
+
+return `
+<svg viewBox="0 0 100 100">
+
+${d}
+
+<ellipse
+cx="50"
+cy="58"
+rx="20"
+ry="27"
+fill="url(#b)"
+stroke="#f2c658"
+stroke-width="5"
+/>
+
+<circle
+cx="50"
+cy="25"
+r="11"
+fill="#ff522e"
+stroke="#ffd66b"
+stroke-width="4"
+/>
+
+<path
+d="M30 48L14 35M70 48L86 35M30 65L13 72M70 65L87 72"
+stroke="#eec24f"
+stroke-width="6"
+/>
+
+</svg>
+`;
+
+return `
+<svg viewBox="0 0 100 100">
+
+${d}
+
+<path
+d="M18 79V42l13-18h38l13 18v37z"
+fill="#160f09"
+stroke="url(#g)"
+stroke-width="5"
+/>
+
+<circle
+cx="50"
+cy="38"
+r="9"
+fill="#ff8b2c"
+/>
+
+<text
+x="50"
+y="94"
+text-anchor="middle"
+fill="#f6d169"
+font-size="14"
+font-weight="bold">
+BONUS
+</text>
+
+</svg>
+`;
+
+}
+
+function upd(){
+
+$("credit").textContent=
+Math.floor(credit);
+
+$("bet").textContent=
+bets[bi];
+
+$("free").textContent=
+free;
+
+$("multi").textContent=
+"×"+multi;
+
+$("buy").textContent=
+bets[bi]*100;
+
+}
+
+function draw(hi=[]){
 
 $("reels").innerHTML="";
 
-for(let col=0;col<5;col++){
+for(let c=0;c<5;c++){
 
-let reel=document.createElement("div");
-reel.className="reel";
+let r=document.createElement("div");
 
-let strip=document.createElement("div");
-strip.className="strip";
-
-for(let row=0;row<3;row++){
-
-let index=row*5+col;
-
-let symbol=document.createElement("div");
-
-symbol.className=
-"symbol "+(highlight.includes(index)?"win":"");
-
-symbol.textContent=board[index];
-
-strip.appendChild(symbol);
-
-}
-
-reel.appendChild(strip);
-$("reels").appendChild(reel);
-
-}
-
-}
-
-async function animateReels(){
-
-$("reels").innerHTML="";
-
-let strips=[];
-
-let height=window.innerWidth<=600?60:75;
-
-let filler=18;
-
-for(let col=0;col<5;col++){
-
-let reel=document.createElement("div");
-reel.className="reel";
-
-let strip=document.createElement("div");
-strip.className="strip";
-
-for(let i=0;i<filler;i++){
+r.className="reel";
 
 let s=document.createElement("div");
-s.className="symbol";
-s.textContent=pick();
 
-strip.appendChild(s);
+s.className="strip";
 
-}
+for(let y=0;y<3;y++){
 
-for(let row=0;row<3;row++){
+let i=y*5+c;
 
-let s=document.createElement("div");
-s.className="symbol";
-s.textContent=board[row*5+col];
+let d=document.createElement("div");
 
-strip.appendChild(s);
+d.className=
+"sym"+(hi.includes(i)?" win":"");
 
-}
+d.innerHTML=
+svg(board[i]);
 
-reel.appendChild(strip);
-$("reels").appendChild(reel);
-
-strips.push(strip);
+s.appendChild(d);
 
 }
 
-await sleep(30);
+r.appendChild(s);
 
-let base=turbo?260:700;
-let step=turbo?50:130;
-
-strips.forEach((strip,i)=>{
-
-strip.style.transition=
-`transform ${base+i*step}ms cubic-bezier(.08,.75,.15,1.03)`;
-
-strip.style.transform=
-`translateY(${-filler*height}px)`;
-
-});
-
-await sleep(base+step*4+100);
+$("reels").appendChild(r);
 
 }
 
-function count(symbol){
-
-return board.filter(x=>x===symbol).length;
-
 }
 
-function evaluate(){
+function evalw(){
 
-let map={};
-let wild=[];
+let m={};
+let w=[];
 
 board.forEach((s,i)=>{
 
-if(s==="🐕")wild.push(i);
+if(s==="wild")
 
-else if(s!=="🪲" && s!=="☥"){
+w.push(i);
 
-if(!map[s])map[s]=[];
+else if(
+!["scatter","bonus"].includes(s)
+){
 
-map[s].push(i);
+if(!m[s])m[s]=[];
+
+m[s].push(i);
 
 }
 
 });
 
-let values={
-"🦂":2,
-"🐍":2,
-"🏺":3,
-"👁️":4,
-"💎":5,
-"👑":8
+let p={
+eye:2,
+cobra:2,
+ankh:3,
+pyr:4,
+pharaoh:6,
+anubis:8
 };
 
-let wins=[];
+let a=[];
 
-Object.keys(map).forEach(symbol=>{
+for(const k in m){
 
-let ids=[...map[symbol],...wild];
+let ids=[
+...m[k],
+...w
+];
 
-if(ids.length>=8){
+if(ids.length>=8)
 
-wins.push({
+a.push({
 ids,
-pay:values[symbol]||2
+pay:p[k]||2
 });
 
 }
 
-});
-
-return wins;
+return a;
 
 }
 
-async function tumble(bet){
+async function tumble(b){
 
-let total=0;
+let tot=0;
 let round=0;
 
 while(round<5){
 
-let wins=evaluate();
+let w=evalw();
 
-if(!wins.length)break;
+if(!w.length)break;
 
 round++;
 
 let ids=[];
+let amt=0;
 
-wins.forEach(w=>{
-w.ids.forEach(i=>{
-if(!ids.includes(i))ids.push(i);
+w.forEach(x=>{
+
+amt+=
+b*x.pay*multi;
+
+x.ids.forEach(i=>{
+
+if(!ids.includes(i))
+
+ids.push(i);
+
 });
+
 });
 
-let amount=0;
+amt=Math.floor(amt);
 
-wins.forEach(w=>{
-amount+=bet*w.pay*multiplier;
-});
-
-amount=Math.floor(amount);
-
-total+=amount;
+tot+=amt;
 
 draw(ids);
 
-$("message").textContent=
-`🔥 TUMBLE ${round} • ×${multiplier} • +${amount}`;
+$("msg").textContent=
+`🔥 TUMBLE ${round} • ×${multi} • +${amt}`;
 
-await sleep(turbo?180:500);
+await sleep(450);
 
-ids.forEach(i=>board[i]=null);
+ids.forEach(i=>
+board[i]=null
+);
 
+board=
+board.map(x=>
+x===null?pick():x
+);
+
+multi=
+Math.min(10,multi+1);
+
+upd();
 draw();
 
-await sleep(turbo?80:180);
-
-board=board.map(x=>x===null?pick():x);
-
-multiplier=Math.min(10,multiplier+1);
-
-update();
-draw();
-
-await sleep(turbo?100:250);
+await sleep(220);
 
 }
 
-return total;
+return tot;
 
 }
 
-function show(html){
+function count(x){
 
-$("card").innerHTML=html;
-$("overlay").classList.add("show");
-
-}
-
-function hide(){
-
-$("overlay").classList.remove("show");
+return board.filter(
+v=>v===x
+).length;
 
 }
 
-async function bonusGame(bet){
+function show(h){
 
-return new Promise(resolve=>{
+$("card").innerHTML=h;
 
-show(`
-<h2>𓂀 BONUS 𓂀</h2>
-<p>Vyber jednu egyptskú truhlicu.</p>
-
-<div class="chests">
-<button>🏺</button>
-<button>🏺</button>
-<button>🏺</button>
-</div>
-`);
-
-document
-.querySelectorAll(".chests button")
-.forEach(btn=>{
-
-btn.onclick=()=>{
-
-let multipliers=[10,15,20,30,50];
-
-let value=
-multipliers[
-Math.floor(Math.random()*multipliers.length)
-]*bet;
-
-btn.textContent="💰";
-
-setTimeout(()=>{
-
-hide();
-resolve(value);
-
-},500);
-
-};
-
-});
-
-});
-
-}
-
-async function addWin(value){
-
-if(value<=0)return;
-
-let start=credit;
-let begin=Date.now();
-
-let duration=turbo?200:650;
-
-return new Promise(resolve=>{
-
-function frame(){
-
-let p=
-Math.min(1,(Date.now()-begin)/duration);
-
-let displayed=
-Math.floor(value*(1-Math.pow(1-p,3)));
-
-$("win").textContent=displayed;
-
-$("credit").textContent=
-Math.floor(start+displayed);
-
-if(p<1){
-
-requestAnimationFrame(frame);
-
-}else{
-
-credit+=value;
-
-update();
-
-resolve();
-
-}
-
-}
-
-frame();
-
-});
+$("ov").classList.add("show");
 
 }
 
@@ -625,14 +895,14 @@ async function spin(){
 
 if(busy)return;
 
-let bet=bets[betIndex];
+let b=bets[bi];
 
-let free=freeSpins>0;
+let fs=free>0;
 
-if(!free && credit<bet){
+if(!fs && credit<b){
 
-$("message").textContent=
-"Nemáš dostatok kreditov.";
+$("msg").textContent=
+"Nemáš dosť kreditov.";
 
 return;
 
@@ -640,179 +910,178 @@ return;
 
 busy=true;
 
-$("spin").disabled=true;
-$("win").textContent="0";
+if(fs){
 
-if(free){
-
-freeSpins--;
+free--;
 
 }else{
 
-credit-=bet;
-multiplier=1;
+credit-=b;
+multi=1;
 
 }
 
-update();
+upd();
 
-$("message").textContent=
-free?"🎁 FREE SPIN…":"𓂀 Valce sa točia…";
+$("win").textContent=0;
 
-board=newBoard();
+$("msg").textContent=
+fs
+?
+"🎁 FREE SPIN…"
+:
+"𓂀 Valce sa točia…";
 
-await animateReels();
+board=nb();
+
+for(let i=0;i<6;i++){
 
 draw();
 
-let scatter=count("🪲");
-let bonus=count("☥");
+board=nb();
 
-let total=await tumble(bet);
+await sleep(75);
 
-if(scatter>=3){
+}
 
-let award=
-scatter>=5?15:
-scatter===4?10:8;
+draw();
 
-freeSpins+=award;
+let sc=count("scatter");
+let bo=count("bonus");
 
-multiplier=Math.max(2,multiplier);
+let tot=
+await tumble(b);
 
-update();
+if(sc>=3){
+
+let a=
+sc>=5
+?
+15
+:
+sc===4
+?
+10
+:
+8;
+
+free+=a;
+
+multi=
+Math.max(2,multi);
+
+upd();
 
 show(`
-<h2>🪲 ${award} FREE SPINS 🪲</h2>
-<p>Anubis odomkol Free Spins!</p>
-<button id="continue">POKRAČOVAŤ</button>
+<h2>${a} FREE SPINS</h2>
+
+<button onclick="
+document
+.getElementById('ov')
+.classList.remove('show')
+">
+POKRAČOVAŤ
+</button>
 `);
 
-setTimeout(()=>{
-
-$("continue").onclick=hide;
-
-},0);
-
 }
 
-if(bonus>=3){
+if(bo>=3){
 
-let bonusWin=
-await bonusGame(bet);
+let v=
+[10,15,20,30,50]
+[
+Math.floor(
+Math.random()*5
+)
+]
+*b;
 
-total+=bonusWin;
-
-$("message").textContent=
-"🏺 BONUS +"+bonusWin;
-
-}
-
-if(total>0){
-
-await addWin(total);
-
-if(total>=bet*20){
+tot+=v;
 
 show(`
-<h2>🔥 MEGA WIN 🔥</h2>
-<p style="font-size:30px">
-${total} kreditov
+<h2>BONUS TEMPLE</h2>
+
+<p>
+Výhra ${v} kreditov
 </p>
-<button id="mega">POKRAČOVAŤ</button>
+
+<button onclick="
+document
+.getElementById('ov')
+.classList.remove('show')
+">
+POKRAČOVAŤ
+</button>
 `);
 
-setTimeout(()=>{
+}
 
-$("mega").onclick=hide;
+if(tot>0){
 
-},0);
+credit+=tot;
+
+$("win").textContent=
+tot;
+
+$("msg").textContent=
+`WIN +${tot}`;
+
+}else if(
+sc<3 &&
+bo<3
+){
+
+$("msg").textContent=
+"Bez výhry.";
 
 }
 
-}else if(scatter<3 && bonus<3){
-
-$("message").textContent="Bez výhry.";
-
-}
-
-update();
+upd();
 
 busy=false;
 
-$("spin").disabled=false;
+if(free>0)
 
-if(freeSpins>0){
+setTimeout(
+spin,
+600
+);
 
-setTimeout(spin,turbo?200:600);
-
-}else if(auto>0){
+else if(auto>0){
 
 auto--;
 
-if(auto>0){
+if(auto>0)
 
-setTimeout(spin,turbo?180:400);
-
-}
-
-}
-
-}
-
-$("spin").onclick=spin;
-
-$("minus").onclick=()=>{
-
-if(!busy && betIndex>0){
-
-betIndex--;
-update();
-
-}
-
-};
-
-$("plus").onclick=()=>{
-
-if(!busy && betIndex<bets.length-1){
-
-betIndex++;
-update();
-
-}
-
-};
-
-$("turbo").onclick=()=>{
-
-turbo=!turbo;
-
-$("turbo").classList.toggle(
-"active",
-turbo
+setTimeout(
+spin,
+400
 );
 
-$("turbo").textContent=
-turbo?"⚡ TURBO ON":"⚡ TURBO";
+}
 
-};
+}
+
+$("spin").onclick=
+spin;
 
 $("auto").onclick=()=>{
 
-if(busy)return;
+if(!busy){
 
 auto=10;
-
 spin();
+
+}
 
 };
 
-board=newBoard();
+board=nb();
 
 draw();
 
-update();
+upd();
 
 </script>
 
